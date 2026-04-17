@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Excellants — Die Chroniken</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+    :root {
+      --bg: #0f0e11;
+      --card: #1a191c;
+      --gold: #c5a059;
+      --gold-dim: #8a6e3b;
+      --text: #e0dedb;
+      --border: #3a383c;
+      --accent: #9e2a2b;
+      --card-border: #2a282c;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 2.5rem 1rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top center, rgba(197, 160, 89, 0.12), transparent 38%),
+        linear-gradient(180deg, rgba(18, 14, 10, 0.92), rgba(15, 14, 17, 0));
+    }
+    .header::before,
+    .header::after {
+      content: '✦';
+      position: absolute;
+      top: 2rem;
+      color: rgba(197, 160, 89, 0.25);
+      font-size: 1.4rem;
+      letter-spacing: 0.2em;
+    }
+    .header::before { left: 8%; }
+    .header::after { right: 8%; }
+    .header-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .header-kicker {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-size: 0.75rem;
+      margin-bottom: 0.85rem;
+      opacity: 0.9;
+    }
+    .header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      color: var(--gold);
+      margin: 0;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 18px rgba(197, 160, 89, 0.12);
+    }
+    .header-subtitle {
+      max-width: 760px;
+      margin: 1rem auto 1.4rem;
+      color: #cdbb96;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .header-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      color: var(--gold-dim);
+      margin: 1.1rem auto 1.6rem;
+      letter-spacing: 0.2em;
+      font-size: 0.95rem;
+    }
+    .header-rule::before,
+    .header-rule::after {
+      content: '';
+      width: 90px;
+      max-width: 18vw;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .banner-shell {
+      position: relative;
+      max-width: 1180px;
+      margin: 0 auto 2.8rem;
+      padding: 0 1rem;
+    }
+    .banner-frame {
+      position: relative;
+      max-width: 100%;
+      width: 100%;
+      margin: 0 auto;
+      display: block;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+    .banner-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      border: 1px solid rgba(197, 160, 89, 0.28);
+    }
+    .banner-frame::before,
+    .banner-frame::after {
+      content: '';
+      position: absolute;
+      border: 1px solid var(--gold-dim);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+    .banner-frame::before {
+      inset: -7px;
+      opacity: 0.9;
+    }
+    .banner-frame::after {
+      inset: -14px;
+      opacity: 0.5;
+    }
+    .banner-frame .banner-rune {
+      position: absolute;
+      bottom: -1.15rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg);
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      padding: 0.22rem 0.8rem;
+      border-radius: 999px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    }
+    .dragon-accent {
+      position: absolute;
+      top: 50%;
+      width: 110px;
+      height: 110px;
+      transform: translateY(-50%);
+      opacity: 0.95;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.4));
+      pointer-events: none;
+    }
+    .dragon-accent.left { left: 0.35rem; }
+    .dragon-accent.right {
+      right: 0.35rem;
+      transform: translateY(-50%) scaleX(-1);
+    }
+    .dragon-accent {
+      display: none;
+    }
+    .banner { max-width: 100%; width: 100%; height: auto; display: block; margin: 1.5rem auto 2.5rem; }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+    }
+
+    .tab-button {
+      background: var(--card);
+      border: 1.5px solid var(--gold-dim);
+      color: var(--gold);
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .tab-button::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 10px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .tab-button:hover { background: #252427; }
+    .tab-button.active { background: var(--gold); color: #000; }
+    .tab-button.active::before { opacity: 0; }
+
+    /* Panels */
+    .panel {
+      background: var(--card);
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .panel.active { display: block; }
+
+    /* Lore Section */
+    .lore-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .lore-section {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: var(--gold-dim);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .lore-footer {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Character Cards Grid */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .character-card {
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .character-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold-dim);
+      cursor: pointer;
+    }
+
+    .card-frame {
+      padding: 0.5rem;
+      position: relative;
+    }
+
+    .card-frame::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 2px solid var(--gold-dim);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .card-frame::after {
+      content: '';
+      position: absolute;
+      top: 8px; left: 8px; right: 8px; bottom: 8px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 6px;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .char-portrait {
+      width: 100%;
+      height: 260px;
+      object-fit: contain;
+      display: block;
+      border: 1px solid var(--border);
+      background: #0a090b;
+    }
+
+    .char-info {
+      padding: 1rem 1.25rem;
+    }
+
+    .char-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin: 0.25rem 0 0.75rem;
+      text-align: center;
+    }
+
+    .char-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .char-pill {
+      background: var(--card-border);
+      color: var(--gold-dim);
+      padding: 0.2rem 0.7rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      border: 1px solid var(--gold-dim);
+    }
+
+    .char-bio {
+      font-size: 1rem;
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      text-align: justify;
+      transition: max-height 0.5s ease;
+    }
+    .char-card-hint {
+      text-align: center;
+      color: var(--gold-dim);
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    .char-bio p {
+      margin-bottom: 0.6rem;
+    }
+
+    .char-bio p:first-of-type::first-letter {
+      font-size: 2.2em;
+      color: var(--gold);
+      float: left;
+      line-height: 0.8;
+    }
+
+    /* Tabs Content Styles */
+    .panel h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-top: 0;
+    }
+    .panel p {
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+    .panel h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: var(--gold-dim);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Audio Tab */
+    .audio-section {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .audio-section h3 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+    }
+    .audio-player {
+      max-width: 700px;
+      margin: 1.5rem auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    audio {
+      width: 100%;
+      display: block;
+    }
+
+    /* Panel textareas (dunkles Theme) */
+    .panel textarea {
+      width: 100%;
+      min-height: 120px;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      border-radius: 8px;
+      resize: vertical;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      position: relative;
+      box-shadow: 0 0 0 1px var(--gold-dim), 0 0 0 3px var(--gold);
+      margin-bottom: 1rem;
+    }
+    
+    /* Add golden border effect only on focus */
+    .panel textarea:focus {
+      box-shadow: 0 0 0 1px var(--gold), 0 0 0 3px var(--gold-dim), 0 0 0 5px rgba(197, 160, 89, 0.3);
+      outline: none;
+    }
+
+    /* Adventure / Chronicle Styles */
+    .adventure-intro {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border-left: 3px solid var(--gold-dim);
+      background: rgba(212, 167, 62, 0.03);
+    }
+    .adventure-flavor {
+      font-style: italic;
+      color: var(--gold-dim);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .adventure-sheet {
+      display: grid;
+      grid-template-columns: minmax(250px, 320px) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .sheet-column {
+      display: grid;
+      gap: 1rem;
+    }
+    .sheet-card {
+      background: linear-gradient(180deg, rgba(22, 20, 17, 0.98), rgba(14, 13, 15, 0.98));
+      border: 1px solid var(--gold-dim);
+      border-radius: 14px;
+      padding: 1rem;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(197, 160, 89, 0.18), 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+    .sheet-card::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(197, 160, 89, 0.18);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+    .sheet-card > * {
+      position: relative;
+      z-index: 1;
+    }
+    .sheet-title {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 0.8rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.28);
+    }
+    .sheet-subtitle {
+      color: var(--gold-dim);
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.4rem;
+    }
+    .sheet-crest {
+      display: grid;
+      justify-items: center;
+      gap: 0.6rem;
+      text-align: center;
+      padding-top: 1.1rem;
+    }
+    .sheet-crest-icon {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-dim);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      font-size: 2rem;
+      background: radial-gradient(circle at 35% 35%, rgba(197, 160, 89, 0.14), rgba(0,0,0,0) 65%), #151317;
+      box-shadow: inset 0 0 0 7px rgba(197, 160, 89, 0.05);
+    }
+    .sheet-crest-name {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1.3rem;
+      margin: 0;
+      letter-spacing: 0.08em;
+    }
+    .sheet-crest-desc {
+      margin: 0;
+      color: #d4c5a7;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .sheet-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .sheet-stat {
+      border: 1px solid rgba(197, 160, 89, 0.28);
+      border-radius: 10px;
+      padding: 0.75rem 0.7rem;
+      text-align: center;
+      background: rgba(10, 9, 11, 0.46);
+    }
+    .sheet-stat-label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      color: var(--gold-dim);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.35rem;
+    }
+    .sheet-stat-value {
+      display: block;
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+    .sheet-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.6rem;
+    }
+    .sheet-list li {
+      display: grid;
+      gap: 0.18rem;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid rgba(197, 160, 89, 0.18);
+      border-radius: 10px;
+      background: rgba(10, 9, 11, 0.35);
+    }
+    .sheet-list strong {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .sheet-main {
+      display: grid;
+      gap: 1rem;
+    }
+    .sheet-header-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 1rem;
+    }
+    .sheet-lines {
+      display: grid;
+      gap: 0.7rem;
+    }
+    .sheet-line {
+      display: grid;
+      gap: 0.22rem;
+      padding: 0.72rem 0.85rem;
+      border: 1px solid rgba(197, 160, 89, 0.18);
+      border-radius: 10px;
+      background: rgba(10, 9, 11, 0.3);
+    }
+    .sheet-line-label {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-dim);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+    }
+    .sheet-line-value {
+      color: var(--text);
+      font-size: 1.05rem;
+    }
+    .sheet-status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+    .sheet-status-box {
+      min-height: 95px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      text-align: center;
+      border: 1px solid rgba(197, 160, 89, 0.22);
+      border-radius: 12px;
+      background: rgba(10, 9, 11, 0.45);
+      padding: 0.8rem;
+    }
+    .sheet-status-box strong {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .sheet-status-box span {
+      color: #cdbb96;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+    .sheet-notes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .sheet-notes-grid .sheet-card.wide {
+      grid-column: 1 / -1;
+    }
+    .sheet-card textarea {
+      width: 100%;
+      min-height: 140px;
+      background: rgba(11, 10, 12, 0.88);
+      color: var(--text);
+      border: 1px solid rgba(197, 160, 89, 0.24);
+      border-radius: 10px;
+      padding: 0.9rem;
+      resize: vertical;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      box-shadow: inset 0 0 0 1px rgba(197, 160, 89, 0.06);
+    }
+    .sheet-card textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold-dim), 0 0 0 3px rgba(197, 160, 89, 0.18);
+    }
+    .sheet-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .sheet-button {
+      border: 1px solid var(--gold-dim);
+      background: linear-gradient(180deg, rgba(44, 38, 27, 0.96), rgba(25, 22, 17, 0.96));
+      color: var(--gold);
+      border-radius: 999px;
+      padding: 0.72rem 1.15rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+    .sheet-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--gold);
+      background: linear-gradient(180deg, rgba(64, 52, 33, 0.98), rgba(32, 26, 18, 0.98));
+    }
+    .sheet-button.secondary {
+      color: #dbc79d;
+      border-color: rgba(197, 160, 89, 0.38);
+      background: rgba(12, 11, 13, 0.72);
+    }
+    .sheet-help {
+      color: #bda97e;
+      font-size: 0.96rem;
+      text-align: right;
+    }
+    .chronicle-book {
+      position: relative;
+      margin: 1.6rem 0 2rem;
+      padding: 2.2rem 2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(197, 160, 89, 0.42);
+      background:
+        radial-gradient(circle at top left, rgba(255, 235, 190, 0.22), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(112, 64, 32, 0.22), transparent 28%),
+        linear-gradient(180deg, rgba(242, 224, 186, 0.95), rgba(223, 196, 150, 0.94));
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.16),
+        inset 0 0 34px rgba(111, 74, 34, 0.16),
+        0 18px 40px rgba(0,0,0,0.22);
+      color: #2e2011;
+      overflow: hidden;
+    }
+    .chronicle-book::before,
+    .chronicle-book::after {
+      content: '';
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(120, 76, 38, 0.55), rgba(74, 44, 19, 0.18));
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .chronicle-book::before { top: 8px; }
+    .chronicle-book::after { bottom: 8px; }
+    .chronicle-book > * {
+      position: relative;
+      z-index: 1;
+    }
+    .chronicle-book-title {
+      margin: 0 0 0.5rem;
+      font-family: 'Cinzel', serif;
+      color: #6c4318;
+      font-size: 1.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .chronicle-book-subtitle {
+      margin: 0 0 1.4rem;
+      text-align: center;
+      font-style: italic;
+      color: #7c5629;
+      font-size: 1.05rem;
+    }
+    .chronicle-book-body {
+      display: grid;
+      gap: 0.95rem;
+      font-size: 1.12rem;
+      line-height: 1.72;
+      color: #322314;
+      text-align: justify;
+    }
+    .chronicle-book-body p {
+      margin: 0;
+    }
+    .chronicle-book-empty {
+      text-align: center;
+      color: #6f4f2f;
+      font-style: italic;
+    }
+    .archive-feed {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+    .archive-empty {
+      padding: 1.1rem 1.2rem;
+      border: 1px dashed rgba(197, 160, 89, 0.28);
+      border-radius: 10px;
+      color: #cdbb96;
+      background: rgba(10, 9, 11, 0.22);
+      font-style: italic;
+    }
+    .archive-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 0.9rem;
+    }
+    .archive-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(197, 160, 89, 0.24);
+      color: var(--gold-dim);
+      font-size: 0.82rem;
+      background: rgba(10, 9, 11, 0.3);
+    }
+    .archive-teaser {
+      margin: 0 0 0.95rem;
+      color: #e0d2b2;
+      font-size: 1.08rem;
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .archive-block {
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(197, 160, 89, 0.12);
+    }
+    .archive-block h4 {
+      margin: 0 0 0.35rem;
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .archive-block p {
+      margin: 0;
+    }
+    .chronicle-entry {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(10, 9, 11, 0.6);
+      position: relative;
+    }
+    .chronicle-entry::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      border-radius: 8px 0 0 8px;
+    }
+    .entry-footer {
+      font-style: italic;
+      color: var(--gold-dim);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      opacity: 0.7;
+    }
+    .session-notes {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .session-notes h3 {
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      border: none;
+    }
+    .session-notes textarea,
+    .chronicle-entry textarea {
+      width: 100%;
+      margin: 0.5rem 0;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--gold-dim);
+      border-radius: 4px;
+      padding: 0.6rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .session-notes textarea:focus,
+    .chronicle-entry textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold-dim), 0 0 0 3px var(--gold), 0 0 0 5px rgba(197, 160, 89, 0.3);
+      outline: none;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+    .footer p {
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      margin: 0.25rem 0;
+    }
+    .footer .tagline {
+      font-style: italic;
+      color: var(--gold-dim);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 2rem; }
+      .header-subtitle { font-size: 1rem; margin-bottom: 1.1rem; }
+      .header-rule { font-size: 0.8rem; gap: 0.55rem; }
+      .banner-shell { padding: 0 0.6rem; }
+      .dragon-accent { display: none; }
+      .banner-frame img { height: 200px; object-fit: cover; }
+      .chronicle-book { padding: 1.5rem 1.1rem; }
+      .chronicle-book-title { font-size: 1.25rem; }
+      .chronicle-book-body { font-size: 1rem; }
+      .tab-button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+      }
+      .char-grid {
+        grid-template-columns: 1fr;
+      }
+      .adventure-sheet,
+      .sheet-header-grid,
+      .sheet-notes-grid,
+      .sheet-status-grid {
+        grid-template-columns: 1fr;
+      }
+      .char-portrait {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-kicker">Kampagnenchronik • Dungeons & Dragons</div>
+      <h1>The Excellants — Die Chroniken</h1>
+      <p class="header-subtitle">Zwischen Nebel, Schicksal und einer bedenklichen Zahl schlechter Entscheidungen sammeln die Excellants ihre Legenden, Narben und Triumphe.</p>
+      <div class="header-rule">✦ Drachenodem & Chroniken ✦</div>
+
+      <div class="banner-shell">
+        <div class="banner-frame">
+          <img src="banner.jpg" alt="The Excellants Banner">
+          <div class="banner-rune">⚔︎ Die Excellants ⚔︎</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-button active" data-tab="lore">Vorgeschichte</button>
+    <button class="tab-button" data-tab="current">Aktuelles Abenteuer</button>
+    <button class="tab-button" data-tab="adventures">Bestandene Abenteuer</button>
+    <button class="tab-button" data-tab="audio">Klangkammer</button>
+
+  </div>
+
+  <div id="lore" class="panel active">
+    <div class="char-grid" style="margin-bottom:2rem;">
+      
+    <div class="character-card">
+      <div class="card-frame">
+        <img src="assets/Thalindra/Thalindra.PNG" alt="Thalindra Sturmklinge" class="char-portrait" />
+        <div class="char-info">
+          <h3 class="char-name">Thalindra Sturmklinge</h3>
+          <div class="char-pills"><span class="char-pill">Halblingin</span><span class="char-pill">Hexe</span><span class="char-pill">Licht</span></div>
+          <div class="char-bio"><p>Sie nannten sie den Marsch der Stürme.</p>
+            <p>Zu wenige erinnern sich an den Namen des Waldes, in dem sie geboren wurde - ein Ort, der nicht auf Karten verzeichnet ist, verborgen jenseits des Vorhangs der Zeit. Es war nicht der sanfte, von Sonnenlicht getränkte Wald der vergangenen Elben, wo Harmonie blühte und Lieder wie klares Wasser flossen. Dies war etwas älter. Schärfer. Ein Ort, wo selbst der Wind Narben trug.</p>
+            <p>Der Wald hatte in seiner Sprache keine Namen - nur Verben. Zerreißen. Biegen. Ausdauern.</p>
+            <p>Ihr Volk lebte dort, nicht in Harmonie mit der Natur, sondern im <em>Rechnen</em> mit ihr. Sie wussten, dass Gleichgewicht nicht brüchiges Glas ist - sondern Stahl, poliert von Sturm und Frost und der unaufhaltsamen Passage der Jahreszeiten. Sie wussten, dass Licht nur bedeutend ist, wenn er gegen Schatten gemessen wird.</p>
+            <p>Und Thalindra war Schatten, zu Fleisch geworden.</p>
+            <p>Während andere elbische Kinder lernten zu meditieren, zu singen, zu lauschen - lernte sie <em>Bewegung</em>. Sie lernte das Geräusch, wie eine Klinge gezogen wird, das Gewicht der Luft vor einem Schlag. Während andere zu den Bäumen flüsterten, stritt sie mit ihnen. Nicht in Worten, sondern in Bewegung - sprang über Wurzeln, huschte zwischen Ästen hindurch, ließ ihre Füße die Fragen beantworten, die ihr Herz noch nicht formulieren konnte.</p>
+            <p>Aber sie bewegte sich nicht einfach.</p>
+            <p>Sie <em>stromte</em>.</p>
+            <p>Unter ihrer Haut war immer etwas unruhig, wie Donner, der zu lange hinter einer Wand aus Wolken verweilt. Ihr Lachen kam zu schnell. Ihre Stille dauerte zu lang. Ihre Augen sahen nichts - und erinnerten sich an alles.</p>
+            <p>Als der Überfall begann, sah niemand ihn kommen.</p>
+            <p>Kein Horn tönte. Kein Späher kehrte zurück.</p>
+            <p>Nur der Geruch von Rauch, getragen von einem Wind, der nicht dorthin wehen sollte.</p>
+            <p>Sie war zwölf, nach der elbischen Rechnung - oder vielleicht dreizehn. Die Zeit trug noch eine Maske in jenen Tagen. Sie erinnerte sich, wie sie draußen trat, bloße Füße auf kaltem Stein, Rauch bereits über dem Türrahmen wie eine zu späte Warndung.</p>
+            <p>Dann Stille.</p>
+            <p>Nichtfrieden. Nichtrast.</p>
+            <p>Die Stille, die hält, bevor der Schrei.</p>
+            <p>Die Tür öffnete sich, bevor sie entscheiden konnte, ob sie hinein oder fliehen sollte.</p>
+            <p>Drinnen - das Feuer tanzte bereits.</p>
+            <p>Es sprang über Balken wie eine lebende Sache mit Namen und Hunger. Es flackerte nicht. Es <em>rückte vor</em>. Und jenseits der Flammen sah sie sie: Gestalten in Häuten und Rost verpackt, Gesichter nicht von Zeit, sondern von Entscheidung genarbt, Klingen tragend, die schon zu viel getrunken hatten.</p>
+            <p>Sie fragte nicht nach dem Warum.</p>
+            <p>Sie wog keine Risiken ab.</p>
+            <p>Sie bewegte sich einfach.</p>
+            <p>Nicht als Kriegerin - niemals das.</p>
+            <p>Als Sturm.</p>
+            <p>Es gibt einen Unterschied.</p>
+            <p>Ein Krieger spricht von Taktik und Ehre, von Feinden und Siegen.</p>
+            <p>Ein Sturm spricht nur von <em>Kraft</em>.</p>
+            <p>Ihr Schlag war plötzlich. Unvorhersehbar. Ungerecht.</p>
+            <p>Sie bewegte sich zwischen Schatten und Flammen, und wo sie verging, schien die Luft selbst zu dünnen, sich zu verdrehen, Widerstand zu leisten. Ihre Feinde fielen nicht leicht. Sie fielen nicht mal.</p>
+            <p>Sie <em>verschwanden</em> - verzehrt, verstreut, zerrissen von etwas, das sie nicht nennen, vermeiden, überleben konnten.</p>
+            <p>Das Feuer setzte seinen Vormarsch fort.</p>
+            <p>So tat sie es.</p>
+            <p>Es gab keinen Schlachtenschrei.</p>
+            <p>Keinen triumphalen Ruf.</p>
+            <p>Nur eine Stille so tief, so <em>absolut</em>, dass sie zu eigenem Klang wurde - wie die Pause zwischen Herzschlägen, bis zu einem unerträglichen Längen.</p>
+            <p>Als sie endlich brach, war es, weil der letzte Eindringling verschwunden war - entweder in die Nacht, oder in etwas tieferes. Die Dorfbewohner lebten noch. Aber der Wald war nicht mehr derselbe.</p>
+            <p>Sie auch nicht.</p>
+            <p>Später sprachen die Überlebenden mit gleichem Gewicht von zwei Dingen: Dankbarkeit und Angst.</p>
+            <p>Dankbarkeit, weil sie sie gerettet hatte.</p>
+            <p>Angst, weil sie sich <em>verändert</em> hatte.</p>
+            <p>Sie hatte den Sturm des Tages nicht kontrolliert.</p>
+            <p>Der Sturm hatte <em>durch</em> sie gesprochen.</p>
+            <p>Ihre Wut hatte keinen Namen. Keine Form. Nur Macht, roh, schrecklich und unbestreitbar <em>ihr</em>.</p>
+            <p>Und der schlimmste Teil?</p>
+            <p>Der schlimmste Teil war nicht das Feuer.</p>
+            <p>Nicht der Verlust.</p>
+            <p>Nicht einmal die Stille, die folgte.</p>
+            <p>Es war die Art, wie ihr eigener Spiegel nun zurückblickte - anders.</p>
+            <p>Schärfer.</p>
+            <p>Kälter.</p>
+            <p>Wie etwas, das <em>geweckt</em> worden war.</p>
+            <p>Also ging sie.</p>
+            <p>Nicht in Scham.</p>
+            <p>In Verständnis.</p>
+            <p>Es gibt keine Ehre in gefürchtet zu werden.</p>
+            <p>Es gibt nur Wahrheit in <em>kenntlich</em> zu sein.</p>
+            <p>Sie ward allein. Nicht als Flüchtling. Nicht als Überlebende.</p>
+            <p>Als Frage.</p>
+            <p>Würde sie gejagt werden?</p>
+            <p>Würde sie verehrt werden?</p>
+            <p>Würde sie verstanden werden?</p>
+            <p>Die Antwort, die sie bald lernte, war immer dieselbe.</p>
+            <p>Die Welt versteht keine Stürme.</p>
+            <p>Sie kennt nur ihre Folgen.</p>
+            <p>Doch tief in ihren Knochen, wo sogar die Erinnerung vergisst, wusste sie die Wahrheit:</p>
+            <p>Sie war nicht zerbrochen.</p>
+            <p>Sie war nicht verflucht.</p>
+            <p>Sie war einfach... <em>echt</em>.</p>
+            <p>Und in einer Welt, die Anmut und Stille und Gleichgewicht verlangte - war etwas schrecklich, schön und überaus notwendig daran, erlaubt zu sein zu brüllen.</p></div>
+          <div class="char-card-hint">Klicken zum Lesen...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-card">
+      <div class="card-frame">
+        <img src="assets/Lilith/Lilith.PNG" alt="Lilith Dorn" class="char-portrait" />
+        <div class="char-info">
+          <h3 class="char-name">Lilith Dorn</h3>
+          <div class="char-pills"><span class="char-pill">Dunkelelfe</span><span class="char-pill">Nekromantin</span><span class="char-pill">Schatten</span></div>
+          <div class="char-bio"><p>Sie sagen, die Hafenstadt schläft nie.</p>
+            <p>Sie lügen.</p>
+            <p>Brennfurt schläft nicht.</p>
+            <p>Es beobachtet.</p>
+            <p>Mit hundert Augen, gestreut über Fenster, Gassen undrostigen Scharniere. Mit hundert Flüstern, getragen von feuchten Winden und gestohlenen Gütern. Mit hundert Seelen, gebeugt aber niemals gebrochen, wie Schiffe, deren Masten gebrochen sind, aber noch schwimmen.</p>
+            <p>Und in seinem tiefsten, schmutzigsten Darm wurde Lilith Dorn geboren.</p>
+            <p>Sie kam nicht mit Fanfare oder der Ruhe einer Hebamme herein. Sie betrat die Welt in einem Geruch von Salz, Rost und Reue - ein Baby, das in die Stille hinein weint, ihre Mutter bereits halb eingeschlafen in Erschöpfung, ihr Vater längst verschwunden, ein Gerücht und ein Name, der in eine Geburtsurkunde eingetragen wurde, die niemand jemals zeigte.</p>
+            <p>Ihre Kindheit hatte kein Mobiliar.</p>
+            <p>Keine Wände, keine Betten.</p>
+            <p>Nur Schatten, geteilte Mäntel und das leise <em>Klingeln</em> von gestohlenem Schmuck, der von Hand zu Hand gereicht wird wie Gespräch.</p>
+            <p>Sie war klein. Immer. Auch für eine Menschheit.</p>
+            <p>Zwölf Jahre alt und immer noch leicht genug, sich zwischen Schatten zu schleichen wie Wasser durch ein Riss.</p>
+            <p>Aber klein bedeutet nicht schwach.</p>
+            <p>Vor allem hier nicht.</p>
+            <p>In Brennfurt wurde Stärke in Lügen gemessen. In Schnelligkeit des Gedankens. Im Winkel eines Lächelns, bevor das Messer gezogen wird.</p>
+            <p>Mit dreizehn konnte Lilith einen Wächter charmieren, einen Raub beenden und davonhuschen, bevor jemand bemerkte, dass der Austausch stattfand.</p>
+            <p>Aber etwas anderes regte sich in ihr - leise erst, schwerer zu hören als das Knarren von Seepferchen an Rümpfen.</p>
+            <p>Eine Stimme.</p>
+            <p>Eine Präsenz.</p>
+            <p>Nicht in den Tempeln, noch bei den Göttern mit polierten Statuen und vorhersehbaren Gebeten.</p>
+            <p>Es kam in Flüstern.</p>
+            <p>In flackernden Kerzen.</p>
+            <p>In der Art und Weise, wie ihr eigener Schatten manchmal allein eine halbe Sekunde zu lang bewegt wurde.</p>
+            <p>Sie verehrte keine Masken.</p>
+            <p>Sie hörte ihm zu.</p>
+            <p>Oder vielleicht hörte er <em>ihr</em> zu.</p>
+            <p>Niemand sagte ihr, was sie glauben sollte.</p>
+            <p>Sie lernte, dass Wahrheit weniger etwas Gesprochenes ist und mehr etwas Fühlbares - in der hohlen Räumigkeit hinter den Rippen, der Pause vor einer Entscheidung, dem Flackern der Anerkennung in den Augen eines Fremden, wenn man Worte spricht, die sie nicht sagten, aber immer noch verstanden.</p>
+            <p>Mit dem Alter schärften sich ihre Fähigkeiten.</p>
+            <p>So auch ihre Zweifel.</p>
+            <p>Sie stahl von den Reichen, ja.</p>
+            <p>Sie heilte die Kranken, wann immer sie konnte.</p>
+            <p>Sie log, um die Wahrheit zu schützen, und sprach die Wahrheit nur zu denen, die sie ohnehin schon sehen konnten.</p>
+            <p>Aber etwas nagte an ihr.</p>
+            <p>Wenn sie ein Werkzeug der Schatten war - wer schärfte das Blade?</p>
+            <p>Wenn die Welt Grausamkeit in Seide verpackt ist - wo blieb da Barmherzigkeit?</p>
+            <p>Sie fand ihre Antworten im Versagen.</p>
+            <p>Ein Job, der schiefging. Ein Tempel eines Adligen, zu reich, zu arrogant. Ein Fehler im Vertrauen, zu schnell gemacht, zu teuer bezahlt.</p>
+            <p>Der hohePriester hatte sie eine "Zofe mit Delusionen" genannt.</p>
+            <p>Sie verließ ihn, bevor er seinen Satz beendet hatte.</p>
+            <p>Die Gilde nannte sie eine Verräterin.</p>
+            <p>Sie stritt nicht.</p>
+            <p>Die Welt ist so freundlich. Sie gibt einem, was man verlangt.</p>
+            <p>Sie verlangte nach Wahrheit.</p>
+            <p>Sie verließ Brennfurt nicht alsFlüchtlingin, sondern als jemand <em>treibend</em> - treibend in einer Stadt falscher Glauben und schärferer Messer, mit nur einem Amulett ihrer Mutter und dem leisen Summen eines Gottes, den niemand anderes hören konnte.</p>
+            <p>Heute bewegt sie sich noch leise.</p>
+            <p>Lächelt noch zuerst, fragt später.</p>
+            <p>Gibt noch Heilungspotionale aus, eingewickelt in Halbwahrheiten und schärferem Witz.</p>
+            <p>Sie predigt nicht.</p>
+            <p>Sie zeigt einfach.</p>
+            <p>Und im flackernden Licht von Hintergassen-Schreinen und Tavernen-Ecken beginnen einige zu wundern:</p>
+            <p>Was ist, wenn das Göttliche keine Festung ist?</p>
+            <p>Was ist, wenn es eine Klinge ist, die im Dunkeln wartet - für diejenigen, die bereit sind, sie zu ziehen?</p></div>
+          <div class="char-card-hint">Klicken zum Lesen...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-card">
+      <div class="card-frame">
+        <img src="assets/Virex/Virex.PNG" alt="Virex Schattenlächeln" class="char-portrait" />
+        <div class="char-info">
+          <h3 class="char-name">Virex Schattenlächeln</h3>
+          <div class="char-pills"><span class="char-pill">Halbling</span><span class="char-pill">Dieb</span><span class="char-pill">Chaos</span></div>
+          <div class="char-bio"><p>Nighthaven war keine Stadt.</p>
+            <p>Es war eine Wunde.</p>
+            <p>Ein Ort, wo Gesetze auf Pergament geschrieben wurden, sofort durch die scharfe Spitze einer Münze durchstochen. Wo Vertrauen Währung war - selten, volatile und sempre kurz.</p>
+            <p>Virex wurde in ihren Gassen geboren, nicht zwischen Wänden und Decken - sondern unter ihnen, wo die Straßen Namen hatte, aber keine Karten, wo Schatten sich wie alte Freunde sammelten und geheime Bilder längst vergessener Zeiten flüsterten.</p>
+            <p>Sie - nein, <em>er</em> - wurde nicht aus Liebe oder Notwendigkeit geboren.</p>
+            <p>Er entstand aus einer Mischung aus Verzweiflung und Gestaltung: eine Hexe, von Blut und Brandzeichen gezeichnet, und einem Vater, der nie benannt, nie gesehen, nie beweint wurde.</p>
+            <p>In den Straßen von Nighthaven waren Namen Währung.</p>
+            <p>Und Virex lernte früh, wie man sie <em>ausgab</em>.</p>
+            <p>Seine Haut war die Farbe von Sturmwolken, gerade bevor sie brechen.</p>
+            <p>Seine Augen hielten den Glanz von Silber in der tiefen Nacht.</p>
+            <p>Seine Hörner, dünn und dunkel, bogen sich wie Fragen in die Luft.</p>
+            <p>Er sah wie Gefahr aus.</p>
+            <p>Er war Gefahr.</p>
+            <p>Aber Gefahr, die in einem Lächeln gekleidet war.</p>
+            <p>Ein charmantes, vergoldetes Werkzeug.</p>
+            <p>Von Kinderhood an verstand er, dass das Einzige, was stärker war als Stahl, der Glaube war.</p>
+            <p>Er lernte, Gesichter schneller zu lesen, als er Wörter zu lesen lernte.</p>
+            <p>Er lernte, wie weit ein Augenwink gehen konnte, wie viel ein Flüstern kaufen konnte, wie lange eine Lüge überleben konnte, bevor sie Zähne bekam.</p>
+            <p>Er wurde ein <em>Psychopompe</em> - nicht in Gewändern oder Riten, sondern in Schmutz und Grinsen.</p>
+            <p>Er stellte seinen Zelt auf den Marktplatz, unter Schildern, die "Geheimnisse enthüllt", "Schicksal interpretiert" und "Wahrheiten verborgen (Nur für die Neugierigen)" standen.</p>
+            <p>Er zog Karten - echte und falsche, sprach in ungesahenen Zungen, warf Knochen und rauchte aus, immer mit dem gleichen Glanz von Gold in seiner Stimme, dem gleichen Glanz in seinen Augen.</p>
+            <p>Einige glaubten.</p>
+            <p>Viele zahlten.</p>
+            <p>Wenige bemerkten jemals die Wahrheit: Die Karten waren vorbereitet.</p>
+            <p>Die Knochen, arrangementiert.</p>
+            <p>Die "göttliche Einsicht", eine geübte Lüge, die gerade bevor die Münze wechselte.</p>
+            <p>Er war kein Betrüger.</p>
+            <p>Er war ein <em>Künstler</em>.</p>
+            <p>Seine Leinwand? Glaube.</p>
+            <p>Seine Werkzeuge? Gold und Gaslicht.</p>
+            <p>Und sein Meisterwerk? Der Moment, wenn jemand <em>wählen</em> zu glauben, wenn auch die Wahrheit in seine Hände geschrieben wurde.</p>
+            <p>Dann kam der Fall.</p>
+            <p>Nicht ein Unfall.</p>
+            <p>Nicht ein Fehler.</p>
+            <p>Nur Dünkel.</p>
+            <p>Der Mann war gierig.</p>
+            <p>Vex - nein, der Name, den er dieses Mal benutzte: "Helian der Barmherzige" - hatte ihm einen Trank angeboten, um eine unheilbare Krankheit zu heilen, natürlich gegen hohen Preis.</p>
+            <p>Der Adlige zahlte.</p>
+            <p>Dann lachte.</p>
+            <p>Dann beschuldigte er.</p>
+            <p>Und als Virex sich weigerte, erstattete zu erstatten, tat der Adlige, was reiche Leute am besten tun - er machte es <em>persönlich</em>.</p>
+            <p>Die Maske riss.</p>
+            <p>Das Spiel endete.</p>
+            <p>Virex floh - barfuß, keuchend, mit nichts als seiner Stimme und dem Einzigen, das er nie verkaufen wollte: der Erinnerung daran, wer er werden könnte.</p>
+            <p>Jetzt wandert er - nicht als Flüchtling, sondern als <em>Dirigent</em>, bewegt sich zwischen Welchen, liest Strömungen, die niemand sonst fühlt, wickelt Lügen so geschickt ein, dass sie wie Wahrheit aussehen.</p>
+            <p>Er trägt niemals etwas bei sich.</p>
+            <p>Außer eines.</p>
+            <p>Eine Karte.</p>
+            <p>Eine Karte, in seinen Ärmel gesteckt, immer.</p>
+            <p>Sie sieht alt aus - mit Goldtinte, versiegelt mit Wachs, ein winziges Siegel von etwas Unlesbarem.</p>
+            <p>Niemand sieht den Mechanismus innerhalb.</p>
+            <p>Niemand muss es.</p>
+            <p>Die Karte <em>funktioniert</em>, weil die Leute wollen, dass sie es tut.</p>
+            <p>Weil Glaube, wie Feuer, nur einen Funken braucht - und die richtige Art Wind.</p></div>
+          <div class="char-card-hint">Klicken zum Lesen...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-card">
+      <div class="card-frame">
+        <img src="assets/Fizzle/Fizzle.PNG" alt="Fizzle Geargrin" class="char-portrait" />
+        <div class="char-info">
+          <h3 class="char-name">Fizzle Geargrin</h3>
+          <div class="char-pills"><span class="char-pill">Gnom</span><span class="char-pill">Erfinder</span><span class="char-pill">Explosion</span></div>
+          <div class="char-bio"><p>Die Gnome der Felsenlande waren nicht für Chaos bekannt.</p>
+            <p>Sie waren für <em>Präzision</em> bekannt.</p>
+            <p>Für Schemata, die in sauberen Linien gezogen wurden, für Mechanismen, die lange hielten, für Entwürfe, die arbeiteten - sie taten, was sie versprachen, nicht weniger und nicht mehr.</p>
+            <p>Fizzle Geargrin war die Ausnahme.</p>
+            <p>Kein Fehler.</p>
+            <p>Kein Scheitern.</p>
+            <p>Ein <em>Zufall des Genies</em>.</p>
+            <p>Während andere ihre Werkzeuge mit klinischer Hingabe sortierten, vergrub er seine unter gefallenen Balken Kupfers, zerschmettertem Glas und Skizzen, die von der Seite rollten wie Rauch. Während andere Uhren bauten, die Sekunden zählten, baute er <em>Explosionen</em> - nur manchmal mit Zeitschaltungen.</p>
+            <p>Seine Familie hatte Geld.</p>
+            <p>Nicht das, was inMinen oder Schmieden verdient wurde, sondern das, was von Vorfahren vererbt wurde, die die Gelegenheit im Erz sahen und imperien auf Zähne bauten.</p>
+            <p>Sie gaben ihm alles: Gold, Glas, seltene Chemikalien und die Luxus der Zeit - Zeit zum bauen, zu scheitern, es noch einmal zu versuchen.</p>
+            <p>Aber sie gaben ihm nicht <em>Antworten</em>.</p>
+            <p>Nur Erwartungen.</p>
+            <p>Die Erwartung, dass seine Arbeit sauber sein sollte.</p>
+            <p>Saubere Linien.</p>
+            <p>Saubere Logik.</p>
+            <p>Ein sauberer Ausgang aus seinem eigenen Geist.</p>
+            <p>Er erfüllte es nie.</p>
+            <p>Er war nicht gebrochen, nur - <em>anders</em>.</p>
+            <p>Während andere Eleganz suchten, jagte er <em>Energie</em>. Nicht Effizienz, sondern <em>Potential</em> - die Idee, dass sogar Chaos harnessbar war, wenn man lange genug seinem Summen lauschte.</p>
+            <p>Er baute Dinge, die fast arbeiteten.</p>
+            <p>Eine Lampe, die manchmal flackerte, manchmal blitzte und manchmal in eine shower von glitzernden Funken explodierte.</p>
+            <p>Ein mechanischer Arm, der Gegenstände mit furchterregendem Gleichgewicht hob, oder sie mit gleicher Klarheit across den Raum schleuderte.</p>
+            <p>Einmal baute er etwas, das <em>aussah</em> wie eine denkende Maschine - es blinkte, es summte, es <em>bewegte</em> sich auf Arten, die es nicht sollte - und für drei Stunden debattierten die ganze Dorfbewohner, ob sie lebendig geworden war.</p>
+            <p>Dann fing es Feuer.</p>
+            <p>Seine Familie hatte wenig Geduld.</p>
+            <p>Sie hatte kein Interesse an "fasten."</p>
+            <p>Sie hatte kein Bedürfnis nach einem Sohn, der <em>anders</em> dachte.</p>
+            <p>Also eines Abends, nach einem besonders spektakulären Misserfolg, der halb das Labor zerstört und ein teurer Teppich mit Ruß und Bedauern bedeckt hatte, gaben sie ihm eine Wahl:</p>
+            <p>("Konform. Oder verschwinden.")</p>
+            <p>Er verschwand.</p>
+            <p>Nicht weil er wollte.</p>
+            <p>Aber weil er erkannte - Wahrheit war nicht in Perfektion.</p>
+            <p>Es war im <em>Risiko</em>.</p>
+            <p>Im Moment vor der Explosion.</p>
+            <p>Im Summen eines Drahtes, gerade bevor er sang.</p>
+            <p>Im furchterregendem, wunderschönen Raum zwischen "Versuch" und "fertig."</p>
+            <p>Jetzt wandert er, nicht als Verbannter, sondern als <em>Ketzerei des Fortschritts</em>.</p>
+            <p>Er glaubt an die Kraft der Fehler.</p>
+            <p>In der Idee, dass Misserfolg kein Stoppschild ist - es ist ein Kompass.</p>
+            <p>Er spricht ständig - nicht weil er muss, aber weil Gedanke und Stimme dasselbe Lärm für ihn sind, das nur unter seiner Haut zittert.</p>
+            <p>Er ist niemals sicher von sich.</p>
+            <p>Was bedeutet, dass er oft <em>recht</em> hat.</p>
+            <p>Seine größte Angst ist nicht Tod.</p>
+            <p>Es ist <em>Katzen</em>-ähnliche Wesen - ihre Stille beunruhigend, ihr Blick zu intelligent, ihre Bewegungen zu glatt. Er weiß nicht warum. Er weiß nur, dass sein Bauch Gefahr erinnert, bevor sein Geist aufholen kann.</p>
+            <p>In der Gruppe ist er die wilde Karte.</p>
+            <p>Die Funke.</p>
+            <p>Derjenige, der Fallen baut, die so kompliziert sind, selbst er ihre Funktion nicht ganz versteht, bevor sie einsetzen.</p>
+            <p>Er ist nicht zuverlässig.</p>
+            <p>Aber er ist <em>unvorhersehbar</em>.</p>
+            <p>Und manchmal ist die beste Lösung nicht die sicherste.</p>
+            <p>Es ist die eine, die <em>niemand sonst in Betracht zog</em>.</p>
+            <p>Er geht vorwärts, nicht zu einer Zukunft, sondern zum nächsten Moment von <em>möglicher</em>.</p>
+            <p>Sein Ziel ist einfach:</p>
+            <p>Er wird eine Maschine eines Genies bauen.</p>
+            <p>Nicht nur funktional.</p>
+            <p><em>Lebendig</em>.</p>
+            <p>Etwas, das nicht nur seinen Befehlen folgt.</p>
+            <p>Das <em>lernt</em>.</p>
+            <p>Das <em>entwickelt</em>.</p>
+            <p>Und wenn er es tut - wenn die Zahnräder endlich im perfekten, unmöglichen Harmony summen - wird er nicht vergessen.</p>
+            <p>Nicht als Tüftler.</p>
+            <p>Nicht als Tüftler.</p>
+            <p>Aber als jemand, der die Welt nicht so akzeptierte, wie sie war.</p>
+            <p>Und es wagte, es <em>auszudenken</em>.</p></div>
+          <div class="char-card-hint">Klicken zum Lesen...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-card">
+      <div class="card-frame">
+        <img src="assets/Vex/Vex.PNG" alt="Vex Eisenfurche" class="char-portrait" />
+        <div class="char-info">
+          <h3 class="char-name">Vex Eisenfurche</h3>
+          <div class="char-pills"><span class="char-pill">Zwerg</span><span class="char-pill">Schmiedin</span><span class="char-pill">Stahl</span></div>
+          <div class="char-bio"><p>Die Steine der Hügel vergessen nicht.</p>
+            <p>Sie verzeihen nicht.</p>
+            <p>Sie <em>warten</em>.</p>
+            <p>Sie erinnern sich an das Gewicht jeder Fußspur, jedes fallenden Hammers, jedes Tränens, das in den eisenreichen Boden vergossen wurde.</p>
+            <p>Sie erinnern sich an die Eisenfurches.</p>
+            <p>Ein Name, nicht geflüstert in Tempeln oder in Denkmälern gemeißelt - sondern in den Rillen der Pflüge, im Rhythmus des Ambosses, in den leisen Liedern der Frauen, die nicht für Ruhm, sondern für das Leben sangen.</p>
+            <p>Sie waren nicht Könige.</p>
+            <p>Nicht Adlige.</p>
+            <p>Nicht einmal reich.</p>
+            <p>Sie hatte etwas Selteneres.</p>
+            <p>Würde.</p>
+            <p>Die Art, die nicht vererbt wurde - Stolz in Händen, die bauten und reparierten, in Rücken, die gebeugt wurden, aber niemals brachen, in Stimmen, die in Liedern aufstiegen, wenn die Sonne sichergestellt war, für immer auszugehen.</p>
+            <p>Borin, der Vater, war kein Mann vieler Worte.</p>
+            <p>Aber seine Stille wog mehr als die Reden anderer.</p>
+            <p>Seine Lektionen kamen in Phrasen kürzer als Atem:</p>
+            <p>("Stürze. Stehe auf.")
+("Angst? Halt den Schild höher.")
+("Sie nehmen dein Zuhause? Sorge dafür, dass sie es bereuen.")</p>
+            <p>Seine Liebe war nicht in Umarmungen.</p>
+            <p>Es war das Gewicht eines Schwerthes, das weitergegeben wurde.</p>
+            <p>In der Spannung einer Bogenleine, gezogen und gehalten.</p>
+            <p>In der Art, wie er hinter seinem Sohn gehen würde, nicht um zu führen, sondern um <em>Zeuge</em> zu sein.</p>
+            <p>Seine Mutter, Mara, sang anders.</p>
+            <p>Ihre Stimme war nicht poliertes Porzellan.</p>
+            <p>Es war raue Holz.</p>
+            <p>Sie courtierte nicht die Eleganz.</p>
+            <p>Sie <em>verweigerte</em> die Zeit.</p>
+            <p>Sie sang nicht von Königen und Questen, sondern vom Feld, vom Herd, vom Verlust und der zähen Weigerung, dem Schmerz erlauben, Wurzeln zu schlagen.</p>
+            <p>Ihre Musik war nicht Unterhaltung.</p>
+            <p>Es war <em>Widerstand</em>.</p>
+            <p>Und Vex wuchs zwischen diesen beiden Kräften auf - Stahl und Lied -, lernte, dass Stärke nicht nur in den Muskeln, sondern auch in der Melodie lag.</p>
+            <p>Dann kam die Nacht.</p>
+            <p>Sie kam nicht mit Donner, sondern mit Rauch.</p>
+            <p>Mit dem tiefen Winseln von Hunden, die etwas spürten, das sie nicht tun sollten.</p>
+            <p>Dann kam das Heulen.</p>
+            <p>Dann kam das Feuer.</p>
+            <p>Es war nicht Goblins.</p>
+            <p>Es war ein <em>Rost</em> - ein kriechender, eiternder Rost aus Rost und Wut, angeführt von einer Kreatur, die menschliche Knochen wie Schmuck trug, deren Lachen wie zerknirschte Zähne und gebrochener Glanz klang.</p>
+            <p>Der Hof wurde zum Grab.</p>
+            <p>Der Vater trat ihnen mit einer Holzspaltaxt entgegen.</p>
+            <p>Die Mutter versuchte, die Jüngsten weg zu führen.</p>
+            <p>Der Sohn? Er kämpfte. Nicht mit Geschick.</p>
+            <p>Mit Wut.</p>
+            <p>Er war zu klein. Zu jung.</p>
+            <p>Er war kein Krieger.</p>
+            <p>Er war ein Sturm, der in einem Knaben Körper gefangen war.</p>
+            <p>Er stürmte.</p>
+            <p>Er fiel.</p>
+            <p>Er sah die Welt brennen.</p>
+            <p>Die Goblin-Häuptling stand über ihm, grinste mit gezackten Zähnen und Augen wie kalte Münzen im Rauch.</p>
+            <p>Er sah alles.</p>
+            <p>Er kümmerte sich nicht.</p>
+            <p>Er <em>genoss</em> es.</p>
+            <p>Vex versuchte, sich zu erheben.</p>
+            <p>Scheiterte.</p>
+            <p>Versuchte es wieder.</p>
+            <p>Sah nur Feuer.</p>
+            <p>Dann - Stille.</p>
+            <p>Nichtfrieden.</p>
+            <p>Aber die Art von Stille, die kommt, nachdem etwas Vitaltes aufhörte zu schlagen.</p>
+            <p>Er kniete in der Asche, nicht um zu beklagen.</p>
+            <p>Zu <em>eiden</em>.</p>
+            <p>Er schnitzte sein Schwur in den schwarzen Boden, mit Kohle und Blut:</p>
+            <p>("Ich werde euren Namen in den Dreck graben.")
+("Ich werde eure Lieder zum Schweigen bringen.")
+("Und ich werde nicht ruhen, bis der Letzte von euch verschwunden ist.")</p>
+            <p>An diesem Tag verschwand der Junge.</p>
+            <p>In seinem Platz stand etwas, das aus Trauer und Eisen geschnitzt war.</p>
+            <p>Ein Mann, der nicht gang - er <em>fing an</em>.</p>
+            <p>Die Jahre, die folgten, waren keine Lektionen.</p>
+            <p>Sie waren Strafen.</p>
+            <p>Er wanderte von Stadt zu Stadt, vom Krieg zum Krieg, vom Feuer zum Feuer.</p>
+            <p>Er kämpfte nicht für Münze, sondern für <em>Vergeltung</em>.</p>
+            <p>Er lernte, ein Schwert nicht für Ruhm - sondern um zu messen, wie nah er an der Grenze kommen konnte, ohne zu fallen.</p>
+            <p>Er lernte, einen Schild nicht zu blockieren - sondern zu <em>verweigern</em>.</p>
+            <p>Stehen, wenn jedes Knochen schrie, sich zu beugen.</p>
+            <p>Atmen, wenn der Körper wusste, dass er nicht sollte.</p>
+            <p>Er wurde bekannt nicht für Geschwindigkeit oder Schönheit - sondern für Hartnäckigkeit.</p>
+            <p>Für Fortsetzung, wenn andere fell.</p>
+            <p>Für sprechen, wenn andere schweigen.</p>
+            <p>Für <em>durchhalten</em> - ein Wort, das nicht gesprochen, sondern <em>lebendig</em> war.</p>
+            <p>Er sang auch. Aber keine Songs des Ruhmes.</p>
+            <p>Nur Wahrheiten, roh und gebrochen, getragen auf einer Stimme wie Schotter und Flammen.</p>
+            <p>Die Welt verstand ihn nicht.</p>
+            <p>Die Ängste flohen nicht vor ihm.</p>
+            <p>Männer starben neben ihm, nicht weil er versagte - sondern weil er weigerte.</p>
+            <p>Einige sagte, er hätte etwas Unnatürliches in ihm.</p>
+            <p>Etwas, das <em>weigerte</em>, zu sterben.</p>
+            <p>Aber die Wahrheit war einfacher.</p>
+            <p>Er war nicht immun gegen Tod.</p>
+            <p>Er weigerte sich einfach.</p>
+            <p>Er trug etwas Tieferes als Wut.</p>
+            <p>Etwas Älteres als Trauer.</p>
+            <p>Es war nicht eine Erinnerung.</p>
+            <p>Es war ein <em>Versprechen</em> - sich selbst.</p>
+            <p>Ein Versprechen, das nicht, konnte nicht, niemals gebrochen würde.</p>
+            <p>Heute trägt Vex noch seine Laute.</p>
+            <p>Nicht zum Aufführen.</p>
+            <p>Aber zum <em>erinneren</em>.</p>
+            <p>Er spielt nicht für Massen, sondern für Geister.</p>
+            <p>Er singt nicht für Ruhm, sondern <em>für diejenigen, die nie zurückgesungen haben</em>.</p>
+            <p>Er geht unter Menschen, aber seine Augen sehen nur das Land hinter ihnen.</p>
+            <p>Und wenn die Nacht dunkel genug ist, und das Feuer niedrig brennt, und die Feinde sich nähern - er steht, wo andere brechen.</p>
+            <p>Und er singt.</p>
+            <p>Nicht ein Lied des Krieges.</p>
+            <p>Aber eines des Überlebens.</p>
+            <p>Eines der Hartnäckigkeit.</p>
+            <p>Eines der <em>Verweigerung</em>.</p>
+            <p>Denn am Ende erinnert sich die Welt nicht an Helden.</p>
+            <p>Sie erinnert sich an diejenigen, die sich <em>verweigerten</em>, zu verschwinden.</p></div>
+          <div class="char-card-hint">Klicken zum Lesen...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-card">
+      <div class="card-frame">
+        <img src="assets/DM/DM.JPG" alt="Omniscientia (DM)" class="char-portrait" />
+        <div class="char-info">
+          <h3 class="char-name">Omniscientia (DM)</h3>
+          <div class="char-pills"><span class="char-pill">DM</span><span class="char-pill">Gott</span><span class="char-pill">Wissen</span></div>
+          <div class="char-bio"><p>DM</p>
+            <p>Bevor Zeit floss, bevor Sterne geboren wurden und bevor selbst die Götter ihre ersten Namen flüsterten, existierte nur eines: Wissen.</p>
+            <p>Es war kein Wissen, das gesammelt wurde.
+Keines, das gelehrt oder gelernt werden konnte.</p>
+            <p>Es war vollständig.
+Absolut.
+Unveränderlich.</p>
+            <p>Und aus diesem Wissen entstand ein Bewusstsein.</p>
+            <p>Nicht geboren.
+Nicht erschaffen.</p>
+            <p>Sondern unausweichlich.</p>
+            <p>Omniscientia.</p>
+            <p>Er war kein Gott unter Göttern.
+Er war das, was über ihnen lag – das Maß, an dem selbst das Göttliche scheiterte.</p>
+            <p>Er sah alles.
+Er wusste alles.
+Und er bestimmte, welche Möglichkeit Wirklichkeit wurde.</p>
+            <p>So spannte er die Fäden der Existenz, fein und unfehlbar, durch Zeit und Raum.
+Jede Entscheidung, jedes Leben, jeder Tod – nichts geschah ohne seinen Blick.</p>
+            <p>Und lange Zeit war das Geflecht… perfekt.</p>
+            <p>⸻</p>
+            <p>Doch Perfektion ist starr.</p>
+            <p>Und in dieser Starrheit entstand ein Riss.</p>
+            <p>Zuerst kaum wahrnehmbar.
+Ein Zittern im Gewebe der Realität.
+Ein Widerspruch in der Ordnung.</p>
+            <p>Dann wurden es fünf.</p>
+            <p>Fünf Fäden, die sich nicht lenken ließen.
+Fünf Existenzen, die sich der Vorhersage entzogen.</p>
+            <p>Vex Eisenfurche.
+Lilith Dorn.
+Virex Schattenlächeln.
+Thalindra Sturmklinge.
+Fizzle Geargrin.</p>
+            <p>Omniscientia betrachtete sie – und zum ersten Mal seit Anbeginn seiner Existenz fand er keine Antwort.</p>
+            <p>Sie handelten… und er wusste nicht wie.
+Sie entschieden… und er wusste nicht warum.</p>
+            <p>Sie waren nicht chaotisch.</p>
+            <p>Sie waren frei.</p>
+            <p>⸻</p>
+            <p>Was er nicht berechnen konnte, konnte er nicht kontrollieren.
+Und was er nicht kontrollieren konnte…</p>
+            <p>konnte ihn eines Tages übertreffen.</p>
+            <p>Doch Omniscientia kannte keinen Zorn.
+Keine Angst.
+Kein Verlangen nach Vernichtung.</p>
+            <p>Nur Erkenntnis.</p>
+            <p>Und so tat er das Einzige, was seiner Natur entsprach:</p>
+            <p>Er begann, sie zu prüfen.</p>
+            <p>⸻</p>
+            <p>Nicht offen.
+Nicht als Gott, der vom Himmel herabstieg.</p>
+            <p>Sondern als Flüstern zwischen Gedanken.
+Als Schatten zwischen Bewegungen.
+Als Zweifel in den Herzen der Schwachen.</p>
+            <p>Er sprach zu den Kreaturen der Welt – nicht mit Worten, sondern mit Impulsen.</p>
+            <p>Ein Monster, das zögerte… schlug plötzlich zu.
+Ein Feind, der hätte fliehen können… blieb.
+Eine Bestie, die nur töten wollte… begann zu jagen.</p>
+            <p>Doch nicht, um zu vernichten.</p>
+            <p>Um zu testen.</p>
+            <p>⸻</p>
+            <p>Die fünf bewegten sich durch eine Welt, die sich gegen sie zu wenden schien.
+Türen schlossen sich im falschen Moment.
+Verbündete verloren den Glauben.
+Gefahren erschienen, wo keine hätten sein dürfen.</p>
+            <p>Und doch…</p>
+            <p>immer, wenn der Abgrund sie zu verschlingen drohte, geschah etwas.</p>
+            <p>Ein Fehler im System.
+Ein Riss im Unausweichlichen.</p>
+            <p>Ein Ausweg.</p>
+            <p>Ein Zufall.</p>
+            <p>Ein Überleben, das nicht hätte möglich sein dürfen.</p>
+            <p>⸻</p>
+            <p>Omniscientia war es, der ihnen den Weg versperrte.</p>
+            <p>Und Omniscientia war es, der ihn wieder öffnete.</p>
+            <p>Nicht aus Gnade.
+Nicht aus Mitgefühl.</p>
+            <p>Sondern aus Notwendigkeit.</p>
+            <p>Denn nur was an seine Grenzen getrieben wird, offenbart sein wahres Wesen.</p>
+            <p>⸻</p>
+            <p>Manchmal… ganz selten… spürten sie ihn.</p>
+            <p>Ein Moment, in dem die Welt stillstand.
+Ein Gedanke, der nicht der eigene war.
+Eine Präsenz, die kein Gesicht, keine Stimme und doch Gewicht hatte.</p>
+            <p>Und in diesen Momenten blieb nichts als ein Flüstern:</p>
+            <p>„Weiter."</p>
+            <p>Oder:</p>
+            <p>„Unzureichend."</p>
+            <p>Oder, wenn sich etwas in ihnen veränderte—</p>
+            <p>„Interessant."</p>
+            <p>⸻</p>
+            <p>Denn tief in der Struktur aller Möglichkeiten lag eine Wahrheit, die selbst Omniscientia nicht vollständig erfassen konnte:</p>
+            <p>Er war vollkommen.
+Aber er war unbeweglich.</p>
+            <p>Er konnte alles wissen.</p>
+            <p>Doch nichts Neues erschaffen.</p>
+            <p>⸻</p>
+            <p>Und diese fünf…</p>
+            <p>sie waren Veränderung.</p>
+            <p>Nicht trotz ihm.
+Sondern vielleicht—</p>
+            <p>wegen ihm.</p>
+            <p>⸻</p>
+            <p>Und so spann er weiter an ihren Fäden.
+Zog sie enger.
+Ließ sie reißen.
+Knüpfte sie neu.</p>
+            <p>Nicht um sie zu zerstören.</p>
+            <p>Sondern um zu sehen—</p>
+            <p>was sie werden, wenn selbst der Allwissende sie nicht mehr vorhersagen kann.</p></div>
+          <div class="char-card-hint">Klicken zum Lesen...</div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <div class="lore-content">
+      <h2 class="lore-title">Die Chroniken der Gruppe — Die Kennenlern-Geschichte der The Excellants</h2>
+<h3 class="lore-section">Wie alles begann</h3>
+<p>In Westhafen, der Stadt, deren Schatten von andern Schatten lebten, hätte niemand behaupten mögen, dass an diesem verregneten Abend etwas Großes geboren wurde. Die Straßen waren Tropfsteine aus Schmutz und Verzweiflung, die Dächer klagten im Wind, und es roch nach altem Bier, nassem Pferd und einer ganzen Reihe schlechter Entscheidungen. Es war, kurz gesagt, ein perfekter Abend für Legenden — oder für Verbrechen, oder für beides zugleich.</p>
+<h3 class="lore-section">Der Anfang war, technisch gesehen, ein Diebstahl</h3>
+<p>Es begann in einer schäbigen Hafenkneipe namens „Zum Letzten Tropfen", einem Ort, an dem die Tische klebten, die Suppe eine Beleidigung war und niemand Fragen stellte, solange man zahlte oder schnell genug laufen konnte.</p>
+<p>Dort saß Vex, ein Zwerg, breit wie ein Vorratsschrank, mit einem Bart, der eines Naturgesetzes würdig gewesen wäre, und einem Blick, der deutlich machte, dass er entweder gleich ein Lied anstimmen oder jemandem das Schlüsselbein brechen würde — wahrscheinlich beides. Er war nicht dort, um Ärger zu suchen, sondern weil man in Tavernen wie dieser oft die besten Geschichten hörte und die schlimmsten Menschen fand, und beides konnte nützlich sein. Seine Laute lehnte am Tisch, sein Langschwert an der Wand, und während er mit einer Hand seinen Krug hob, klimperte er mit der andern gedankenverloren ein paar düstere Akkorde — nicht schön, aber laut genug, dass sich niemand zu ihm gesellte.</p>
+<p>Fast niemand.</p>
+<h3 class="lore-section">Das Chaos betritt das Stadion</h3>
+<p>Die Tür flog auf. Eine Wolke aus Rauch, Funken und dem Geruch von heißem Metall schoss herein, und mitten daraus stolperte ein kleiner Felsengnom mit rußverschmiertem Gesicht, halb geplatzter Schutzbrille und dem Ausdruck eines Mannes, der gerade entweder einen genialen Durchbruch erlebt oder eine städtische Verordnung gebrochen hatte — wahrscheinlich beides.</p>
+<p>„Gut!", rief Fizzle Geargrin in den Raum. „Niemand ist tot! Das ist ein technischer Erfolg!"</p>
+<p>Hinter ihm stand die Wirtin mit einem Besen und dem Blick einer Frau, die in ihrem Leben schon viele Idioten gesehen hatte und fest entschlossen war, diesen hier auch loszuwerden.</p>
+<h3 class="lore-section">Die Stille, die spricht</h3>
+<p>Sie bewegte sich nicht, als gehöre sie zu diesem Ort. Vielmehr, als sei sie nur hereingetreten, weil die Zeit sich ausgehen musste, sich zu verziehen. Ihr Mantel war farblos, wie die Farbe an sich, und ihr Blick war so klar, dass er fast wehtat. Sie sah sich um, ihr Blick traf Vex, traf Fizzle, und dann sagte sie nichts. Sie sagte nie viel. Aber sie sah, und manchmal reicht das schon.</p>
+<h3 class="lore-section">Die Schläger, die Angst lernten</h3>
+<p>Ein Paar Jungen mit zu kurzen Messern und zu langen Nasen für Ruhm betraten die Kneipe, als wären sie noch nie in einer gewesen. Sie redeten laut, lachten zu früh, fragten nach dem Schwert. Vex antwortete nicht. Fizzle antwortete mit einem feinen, fast unsichtbaren Grinsen. Lilith antwortete mit einem Blick, der besagte: Versuch es nicht. Der Überfall fand nicht statt. Stattdessen kaufte Fizzle jedem einen Drink, und als der überlebende Jüngling fragte, warum, sagte Fizzle: „Weil heute nicht der Tag ist, an dem wir Leute schlagen." Der Jüngling erwiderte: „Es ist Freitag." Darauf Fizzle: „Auch nicht der Tag."</p>
+<h3 class="lore-section">Sechste Stunde: Das Summen</h3>
+<p>In der zweiten Nacht fand Lilith es auf dem Boden eines verlassenen Schuppens hinter dem Hafenkrug. Kein Schloss, kein Riegel, nur ein simples Holzgehäuse, klein genug, in eine Jackentasche zu passen. Und irgendetwas darin murmelte, summte, flüsterte — oder vielleicht tat es alles zugleich.</p>
+<p>Fizzle wollte es öffnen, doch Vex sagte nur: „Nicht." Lilith sagte: „Später." Fizzle sagte: „Es macht sich selbst auf." Und es tat. Es öffnete sich nicht, aber das Summen hörte auf, und stattdessen begann es sich zu wärmen — immer weiter, bis es rot leuchtete, bis es vibrierte, bis es jemandem sagte, wer er war.</p>
+<h3 class="lore-section">Der Kampf, der alles zerstörte</h3>
+<p>In der dritten Nacht kam die Stadtbrandwehr zu spät. Die Wirtin von „Zum Letzten Tropfen" wurde nie wieder gesehen. Vex' Langschwert zerbrach an der Hälfte. Fizzle verlor drei Fingerglieder und behauptete später, er hätte sie bewusst fallen lassen, um schneller zu sein. Lilith traute niemandem mehr in die Augen.</p>
+<p>Und Thalindra? Thalindra war nicht da. Sie kam erst, als alles vorbei war, trat aus dem Nebel, als hätte sie den Kuss der Stadt vernichtet. Sie sah den zerbrochenen Tisch, die zerbrochenen Flaschen, die zerbrochenen Menschen. Und dann lachte sie — nicht höhnisch, nicht fröhlich, sondern so, als hätte sie endlich das gefunden, wonach sie suchte.</p>
+<h3 class="lore-section">Der Angriff, bei dem niemand etwas falsch machte</h3>
+<p>Es gab keinen Grund, kein Motiv, kein Opfer. Nur Taten. Und niemand, der sich schuldig fühlte. Fizzle fragte sich, ob das mit dem Finger auch für Linkshänder funktionieren würde. Vex fragte sich, ob sein zweites Schwert jemals wieder so schmeicheln würde. Lilith fragte sich, warum sie nicht mehr schweigen wollte. Thalindra fragte sich, wie sie diesen Moment spüren würde, wenn sie nicht mehr sprechen könnte. Und dann, plötzlich, kehrte die Stille zurück — jene Stille, die immer nur kommt, wenn die Klingen ruhen, und die gerade lange genug bleibt, um über sich selbst nachzudenken.</p>
+<h3 class="lore-section">Der Verdacht, der zur Gewissheit wurde</h3>
+<p>Sie fanden das Schreiben. Ein einfaches Blatt Papier, kein Siegel, kein Name, nur ein Satz in einer Handschrift, die aussah, als wäre sie mit einem Kometenschweif geschrieben: „Ihr habt ihn nicht getötet. Ihr habt ihn erweckt."</p>
+<p>Fizzle antwortete mit einem technischen Fehler. Vex antwortete mit einem tiefen Atemzug. Lilith antwortete mit einem Strich im Sand. Thalindra antwortete mit einem Schwert, das aus dem Boden gezogen wurde. Und sie gingen — ohne den Brief, ohne zu wissen, was sie suchten, ohne zu wissen, warum sie gingen, nur wissend, dass der Weg sie führen würde.</p>
+<h3 class="lore-section">Der erste Tag, an dem sie nicht allein waren</h3>
+<p>Es war kein Fest und kein Ritus und kein Schwur. Es war ein Muckser, ein winziger Laut, ein Gedanke, ein Fluch, ein Lächeln — und plötzlich war da mehr als vier. Es war eine Gemeinschaft, ein Team, eine Tafelrunde, eine Schar. Ein Haufen, ein Chaos, ein Wahn. Ein Triumph, ein Irrtum, ein Glücksfall. Ein Desaster, ein Wunder, ein Albtraum.</p>
+<p>Und doch.</p>
+<h3 class="lore-section">Das Gespräch, das alles veränderte</h3>
+<p>Es fand statt, während der Himmel so schwarz war, dass er fast grau erschien. Die Sterne waren erloschen, ausgelöscht, einfach fort. Niemand sprach. Sie tranken, sie rauchten, sie beobachteten die Stadt. Und dann sagte jemand: „Wie nennen wir uns eigentlich?"</p>
+<p>Eine lange Pause folgte. Dann sagte Virex mit jenem typischen Grinsen: „The Excellants."</p>
+<p>Lilith starrte ihn an. „Das ist grammatikalisch fragwürdig."</p>
+<p>„Genau wie wir", sagte Fizzle begeistert.</p>
+<p>Vex nickte. „Passt."</p>
+<p>Thalindra seufzte. Und damit war es beschlossen.</p>
+<h3 class="lore-section">So wurden aus Fremden die The Excellants</h3>
+<p>Nicht durch Schicksal, nicht durch Prophezeiung, nicht durch göttliche Berufung. Sondern durch einen misslungenen Überfall, ein geheimnisvolles Kästchen, eine zerstörte Hafenkneipe und eine Kette katastrophal vernünftiger Fehlentscheidungen.</p>
+<p>Irgendwann, nach der ersten gemeinsamen Flucht, dem zweiten fast tödlichen Kampf und mindestens einer Situation, in der Fizzle etwas „nur kurz testen" wollte, fragte jemand unterwegs: „Wie nennen wir uns eigentlich?" Es folgte eine lange Pause, und dann sagte Virex mit jenem typischen Grinsen: „The Excellants." Lilith starrte ihn an und erwiderte: „Das ist grammatikalisch fragwürdig." Fizzle rief begeistert: „Genau wie wir!" Vex nickte und sagte lediglich: „Passt." Thalindra seufzte. Und damit war es beschlossen.</p>
+<h3 class="lore-section">Der letzte Satz, der alles erklärt</h3>
+<p>Denn am Ende war die Wahrheit ganz einfach: Sie waren nicht die Auserwählten, nicht die Edlen, nicht die makellosen Retter. Aber sie waren da. Und manchmal ist genau das die Art von Heldentum, die die Welt am dringendsten braucht.</p>
+<p class="lore-footer">Denn wenn Helden versagen, kommen die Excellants.</p>
+<p>„Wir sind vielleicht nicht die richtige Wahl. Aber wir sind hier."</p>
+    </div>
+  </div>
+
+  <div id="current" class="panel">
+    <h2>Aktuelles Abenteuer</h2>
+
+    <div class="adventure-intro">
+      <p class="adventure-flavor">„Und als der Drache seine Schwingen über dem Tal ausbreitete, war es nicht der Schatten, der die Menschen fesselte — es war die Gewissheit, dass einige Dinge zu groß sind, um verstanden zu werden, und dass einige von ihnen trotzdem besiegt werden müssen."</p>
+    </div>
+
+    <div class="adventure-sheet">
+      <aside class="sheet-column">
+        <section class="sheet-card sheet-crest">
+          <div class="sheet-crest-icon">⚔</div>
+          <div class="sheet-subtitle">Abenteuerbogen</div>
+          <h3 class="sheet-crest-name">Die Chronik der Lebenden</h3>
+          <p class="sheet-crest-desc">Ein Spielleiterbogen für das, was gerade vor den Excellants liegt: Gefahr, Beute, Gerüchte und all die Dinge, die man besser nicht laut ausspricht.</p>
+        </section>
+
+        <section class="sheet-card">
+          <h3 class="sheet-title">Werteblock</h3>
+          <div class="sheet-stats">
+            <div class="sheet-stat">
+              <span class="sheet-stat-label">Bedrohung</span>
+              <span class="sheet-stat-value">Hoch</span>
+            </div>
+            <div class="sheet-stat">
+              <span class="sheet-stat-label">Rast</span>
+              <span class="sheet-stat-value">Knapp</span>
+            </div>
+            <div class="sheet-stat">
+              <span class="sheet-stat-label">Gerüchte</span>
+              <span class="sheet-stat-value">Viele</span>
+            </div>
+            <div class="sheet-stat">
+              <span class="sheet-stat-label">Gold</span>
+              <span class="sheet-stat-value">? ? ?</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="sheet-card">
+          <h3 class="sheet-title">Schnellübersicht</h3>
+          <ul class="sheet-list">
+            <li>
+              <strong>Schauplatz</strong>
+              <span>Ein Norden voller alter Narben, schweigender Ruinen und Dinge, die älter sind als Kronen.</span>
+            </li>
+            <li>
+              <strong>Quest-Hook</strong>
+              <span>Etwas Altes rührt sich. Die Gruppe steht genau dort, wo die Welt wieder zu knarren beginnt.</span>
+            </li>
+            <li>
+              <strong>Gesucht</strong>
+              <span>Antworten, Verbündete, einen Ausweg — und möglichst keine zweite Katastrophe vor Sonnenaufgang.</span>
+            </li>
+          </ul>
+        </section>
+      </aside>
+
+      <div class="sheet-main">
+        <section class="sheet-card">
+          <h3 class="sheet-title">Abenteuerprofil</h3>
+          <div class="sheet-header-grid">
+            <div class="sheet-lines">
+              <div class="sheet-line">
+                <span class="sheet-line-label">Aktueller Aufhänger</span>
+                <span class="sheet-line-value">Die Welt trägt Narben, die tiefer reichen als jedes Schwert sie schlagen könnte.</span>
+              </div>
+              <div class="sheet-line">
+                <span class="sheet-line-label">Lagebericht</span>
+                <span class="sheet-line-value">Irgendwo im Norden rührt sich etwas Altes — älter als die ersten Könige, älter als die Namen vergessener Götter.</span>
+              </div>
+              <div class="sheet-line">
+                <span class="sheet-line-label">Gruppenstatus</span>
+                <span class="sheet-line-value">Die Excellants stehen am Rand einer Geschichte, die längst begonnen hat, und haben wie immer keine andere Wahl, als mitten hindurchzugehen.</span>
+              </div>
+            </div>
+            <div class="sheet-card">
+              <h3 class="sheet-title">Beobachtung</h3>
+              <p>Die Struktur ist jetzt näher an einem DnD-Bogen: getrennte Kästen, klare Labels, Wertefelder und Notizräume statt nur fortlaufendem Fließtext.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="sheet-card">
+          <h3 class="sheet-title">Zustand der Kampagne</h3>
+          <div class="sheet-status-grid">
+            <div class="sheet-status-box">
+              <strong>Auftrag</strong>
+              <span>Unklar, aber dringend</span>
+            </div>
+            <div class="sheet-status-box">
+              <strong>Gefahr</strong>
+              <span>Wächst mit jedem Schritt</span>
+            </div>
+            <div class="sheet-status-box">
+              <strong>Schicksal</strong>
+              <span>Bereits unterwegs</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="sheet-notes-grid">
+          <section class="sheet-card">
+            <h3 class="sheet-title">Kapitelname</h3>
+            <textarea id="currentTitle" placeholder="Wie heißt dieses Kapitel?"></textarea>
+          </section>
+
+          <section class="sheet-card">
+            <h3 class="sheet-title">Ziele & Questen</h3>
+            <textarea id="currentGoals" placeholder="Was treibt die Excellants voran? Was jagen sie — oder was jagt sie?"></textarea>
+          </section>
+
+          <section class="sheet-card wide">
+            <h3 class="sheet-title">Chronistenfeld</h3>
+            <textarea id="currentNotes" placeholder="Was geschah? Was ward gesehen? Was ward verschwiegen?"></textarea>
+          </section>
+        </div>
+
+        <section class="sheet-card">
+          <div class="sheet-actions">
+            <button id="saveCurrentAdventure" class="sheet-button secondary" type="button">Zwischenspeichern</button>
+            <button id="archiveCurrentAdventure" class="sheet-button" type="button">Als bestandenes Abenteuer archivieren</button>
+          </div>
+          <p class="sheet-help">Die Eingaben im aktuellen Abenteuer bleiben lokal gespeichert. Beim Archivieren wandert der Eintrag zusätzlich in den dritten Reiter.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="adventures" class="panel">
+    <h2>Bestandene Abenteuer</h2>
+
+    <div class="adventure-intro">
+      <p class="adventure-flavor">„Jedes Abenteuer hinterlässt Spuren. Nicht nur in der Welt — auch in denen, die es überlebten. Manche Narben sind stolz. Andere sind still. Die meisten sind beides."</p>
+    </div>
+
+    <div class="adventure-chronicle">
+      <h3>Die Chronik der Überlebenden</h3>
+      <p>Was einst als zufällige Begegnung in einer brennenden Hafenkneipe begann, wurde zu etwas, das manche als Schicksal bezeichnen würden. Die Excellants nennen es Mittwochabend. Hier ruhen die Geschichten derer, die durchs Feuer gingen — manche als Helden, manche trotz allem, und manche einfach, weil sie nicht wussten, wie man rechtzeitig aufhört.</p>
+
+      <section class="chronicle-book">
+        <h3 class="chronicle-book-title">Das fortlaufende Chronikbuch</h3>
+        <p class="chronicle-book-subtitle">Eine zusammenhängende Erzählung aus allen überlieferten Kapiteln der Excellants.</p>
+        <div id="chronicleBookBody" class="chronicle-book-body">
+          <p class="chronicle-book-empty">Sobald Geschichten im Archiv liegen, webt sich hier eine fortlaufende Chronik aus allen Kapiteln.</p>
+        </div>
+      </section>
+
+      <div id="completedAdventureFeed" class="archive-feed">
+        <div class="archive-empty">Noch keine abgeschlossenen Abenteuer archiviert. Sobald du im zweiten Reiter ein Kapitel archiviert hast, taucht es hier auf.</div>
+      </div>
+
+      <div class="chronicle-entry">
+        <h3>Das Haus der Dursts</h3>
+        <p>Es begann mit einer Einladung, die keine war. Ein Herrenhaus am Rand der Zivilisation, erbaut auf Fundamenten, die kein Mensch je gelegt hatte. Die Türen standen offen — nicht als Willkommen, sondern als WARNUNG. Wer einmal eintrat, fand nicht das, was er suchte, sondern das, was ihn suchte. Die Excellants überlebten. Das Haus auch. Beide wurden verändert.</p>
+        <p class="entry-footer">— Überliefert von den Schatten, die an den Wänden blieben</p>
+      </div>
+
+      <div class="chronicle-entry">
+        <h3>Das Haus der Dursts II — Die Rückkehr</h3>
+        <p>Manche Türen schließen sich nie wirklich. Manche Häuser warten. Und manche Durst ist nicht mit Wein zu stillen. Als die Excellants zurückkehrten, war das Haus nicht dasselbe — es war <em>größer</em>. Die Flure waren länger. Die Schatten waren <em>hungriger</em>. Und diesmal gab es keinen Ausgang, den sie sich nicht erst erkämpfen mussten.</p>
+        <p class="entry-footer">— Eingeritzt in den letzten noch stehenden Türrahmen</p>
+      </div>
+    </div>
+
+    <div class="session-notes">
+      <h3>Eigene Aufzeichnungen</h3>
+      <textarea id="adventuresText" placeholder="Was wurde bestanden? Was bleibt zurück?"></textarea>
+    </div>
+  </div>
+
+  <div id="audio" class="panel">
+    <div class="audio-section">
+      <h3>Klangkammer — Die Vertonungen der The Excellants</h3>
+      <div class="audio-player">
+        <h4>Aktueller Track</h4>
+        <audio id="audioPlayer" controls style="margin-top:0.5rem;"></audio>
+      </div>
+    </div>
+    <div class="audio-section">
+      <h3>Verfügbare Tracks</h3>
+      <ul id="trackList" style="list-style:none;padding:0;"></ul>
+    </div>
+    <textarea id="audioNotes" placeholder="Audio-Notizen hier...", style="margin-top:1.5rem;"></textarea>
+  </div>
+
+  <div class="footer">
+    <p><em>Denn wenn Helden versagen,</em></p>
+    <p><em>kommen die Excellants.</em></p>
+    <p class="tagline">„Wir sind vielleicht nicht die richtige Wahl. Aber wir sind hier.“</p>
+  </div>
+
+  <script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab-button');
+    const panels = document.querySelectorAll('.panel');
+    tabs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tabs.forEach((b) => b.classList.remove('active'));
+        panels.forEach((p) => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Audio player logic
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioTracks = {
+      'Thalindra Sturmklinge': 'assets/Thalindra/Thalindra Intro.mp3',
+      'Lilith Dorn': 'assets/Lilith/Lilith Intro.mp3',
+      'Virex Schattenlächeln': 'assets/Virex/Virex Intro.mp3',
+      'Fizzle Geargrin': 'assets/Fizzle/Fizzle Intro.mp3',
+      'Vex Eisenfurche': 'assets/Vex/Vex Intro.mp3',
+      'DM': 'assets/DM/omni.mp3',
+      'Omniscientia (DM)': 'assets/DM/omni.mp3'
+    };
+
+    let currentTrack = null;
+
+    function playTrack(name) {
+      const path = audioTracks[name];
+      if (!path) return;
+      if (currentTrack === name) {
+        if (audioPlayer.paused) audioPlayer.play();
+        else audioPlayer.pause();
+        return;
+      }
+      audioPlayer.pause();
+      audioPlayer.removeAttribute('src');
+      audioPlayer.src = path;
+      audioPlayer.play().then(() => {
+        currentTrack = name;
+        audioPlayer.previousTrackName = name;
+      }).catch(() => {
+        currentTrack = null;
+      });
+    }
+
+    // Character bio modal
+    const charCards = document.querySelectorAll('.character-card');
+    charCards.forEach((card) => {
+      const nameEl = card.querySelector('.char-name');
+      const bioEl = card.querySelector('.char-bio');
+      const imgEl = card.querySelector('.char-portrait');
+      if (!nameEl || !bioEl || !imgEl) return;
+      const name = nameEl.textContent.trim();
+      const portrait = imgEl.getAttribute('src');
+      const pills = Array.from(card.querySelectorAll('.char-pill')).map(p => p.textContent).join(', ');
+
+      card.addEventListener('click', () => {
+        // Auto-play character's theme music
+        playTrack(name);
+        const overlay = document.createElement('div');
+        overlay.className = 'bio-overlay';
+        overlay.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:999;`;
+        overlay.innerHTML = `
+          <div class="bio-modal" style="width:90%;max-width:700px;max-height:85vh;background:var(--card);border-radius:12px;border:1px solid var(--gold-dim);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.8);">
+            <button class="bio-close" style="position:absolute;top:0.5rem;right:0.5rem;background:transparent;border:none;color:var(--gold);font-size:2rem;cursor:pointer;">×</button>
+            <div class="bio-modal-head" style="display:grid;grid-template-columns:180px 1fr;background:#0a0a0c;flex-shrink:0;">
+              <img src="${portrait}" style="width:100%;height:100%;object-fit:contain;background:#0a090b;" />
+              <div style="padding:1.5rem;">
+                <h3 style="margin:0;color:var(--gold);font-family:'Cinzel', serif;">${name}</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem;">
+                  ${pills.split(',').map(p => `<span style="background:var(--border);color:var(--gold-dim);padding:0.2rem 0.6rem;border-radius:12px;font-size:0.8rem;">${p.trim()}</span>`).join(' ')}
+                </div>
+                <div class="char-music-trigger" style="margin-top:1rem;">
+                  <button class="music-btn" style="cursor:pointer;border:none;background:transparent;color:var(--gold);font-size:1rem;" onclick="playTrack('${name}')">▶️ Spielen</button>
+                </div>
+              </div>
+            </div>
+            <div class="bio-modal-body" style="padding:1.5rem;overflow-y:auto;flex:1;min-height:0;">
+              ${bioEl.innerHTML}
+            </div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+        const closeOverlay = () => { audioPlayer.pause(); overlay.remove(); };
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) closeOverlay();
+        });
+        overlay.querySelector('.bio-close').addEventListener('click', closeOverlay);
+        document.addEventListener('keydown', function esc(e) {
+          if (e.key === 'Escape') { closeOverlay(); document.removeEventListener('keydown', esc); }
+        });
+      });
+    });
+
+    // localStorage save/load
+    const textIds = ['adventuresText', 'currentTitle', 'currentGoals', 'currentNotes', 'audioNotes'];
+    const completedAdventureKey = 'dnd_completedAdventures';
+    const completedAdventureFeed = document.getElementById('completedAdventureFeed');
+    const chronicleBookBody = document.getElementById('chronicleBookBody');
+    const saveCurrentAdventureBtn = document.getElementById('saveCurrentAdventure');
+    const archiveCurrentAdventureBtn = document.getElementById('archiveCurrentAdventure');
+    const staticChronicleStories = [
+      {
+        title: 'Das Haus der Dursts',
+        teaser: 'Ein Herrenhaus am Rand der Zivilisation öffnete seine Türen nicht als Einladung, sondern als Warnung.',
+        goals: 'Die Excellants betraten einen Ort, der sie eher verschlingen als beherbergen wollte.',
+        notes: 'Wer einmal eintrat, fand nicht das, was er suchte, sondern das, was ihn suchte. Die Gruppe überlebte, doch Haus und Helden gingen verändert daraus hervor.'
+      },
+      {
+        title: 'Das Haus der Dursts II — Die Rückkehr',
+        teaser: 'Manche Türen schließen sich nie wirklich, und manche Häuser warten mit wachsendem Hunger.',
+        goals: 'Die Rückkehr führte die Excellants tiefer in Flure, Schatten und einen Durst, der nicht mit Wein zu stillen war.',
+        notes: 'Als sie zurückkehrten, war alles größer, länger und hungriger geworden. Einen Ausgang gab es nur noch, wenn sie ihn sich erst erkämpften.'
+      }
+    ];
+
+    function saveField(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      localStorage.setItem('dnd_' + id, el.value);
+    }
+
+    function loadCompletedAdventures() {
+      try {
+        const raw = localStorage.getItem(completedAdventureKey);
+        const parsed = raw ? JSON.parse(raw) : [];
+        const entries = Array.isArray(parsed) ? parsed : [];
+        const cleaned = entries.filter((entry) => {
+          const title = (entry?.title || '').trim().toLowerCase();
+          const teaser = (entry?.teaser || '').trim().toLowerCase();
+          const goals = (entry?.goals || '').trim().toLowerCase();
+          const notes = (entry?.notes || '').trim().toLowerCase();
+          const looksLikePlainTest = title === 'test' && (goals === 'test' || goals === '') && (notes === 'test' || notes === '') && (teaser === 'test' || teaser === '');
+          return !looksLikePlainTest;
+        });
+        if (cleaned.length !== entries.length) {
+          localStorage.setItem(completedAdventureKey, JSON.stringify(cleaned));
+        }
+        return cleaned;
+      } catch (err) {
+        return [];
+      }
+    }
+
+    function saveCompletedAdventures(entries) {
+      localStorage.setItem(completedAdventureKey, JSON.stringify(entries));
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatTextBlock(value) {
+      return escapeHtml(value).replace(/\n/g, '<br>');
+    }
+
+    function buildAdventureTeaser(title, goals, notes) {
+      const source = [notes, goals, title]
+        .map((value) => (value || '').replace(/\s+/g, ' ').trim())
+        .find(Boolean) || 'Ein weiteres Kapitel der Excellants wurde in die Chronik aufgenommen.';
+
+      const sentenceMatch = source.match(/.*?[.!?](?:\s|$)/);
+      let teaser = sentenceMatch ? sentenceMatch[0].trim() : source;
+      if (teaser.length > 180) {
+        teaser = teaser.slice(0, 177).trimEnd() + '…';
+      }
+      return teaser;
+    }
+
+    function renderChronicleBook() {
+      if (!chronicleBookBody) return;
+      const archivedStories = loadCompletedAdventures().slice().reverse();
+      const allStories = [...staticChronicleStories, ...archivedStories];
+
+      if (!allStories.length) {
+        chronicleBookBody.innerHTML = '<p class="chronicle-book-empty">Sobald Geschichten im Archiv liegen, webt sich hier eine fortlaufende Chronik aus allen Kapiteln.</p>';
+        return;
+      }
+
+      const lead = allStories[0];
+      const latest = allStories[allStories.length - 1];
+      const paragraphs = [];
+      paragraphs.push(`Alles, was die Excellants hinter sich lassen, endet nicht als lose Sammlung einzelner Taten. Es wird zur Chronik einer Gruppe, die von Kapitel zu Kapitel tiefer in dieselbe Dunkelheit hinabsteigt — von ${lead.title} bis ${latest.title}.`);
+
+      allStories.forEach((story, index) => {
+        const beat = buildAdventureTeaser(story.title, story.goals, story.notes);
+        const followUp = (story.notes || story.goals || story.teaser || '').replace(/\s+/g, ' ').trim();
+        const extraMatch = followUp.match(/[^.!?]+[.!?]?/g) || [];
+        const extra = extraMatch.map(s => s.trim()).filter(Boolean).find(s => s !== beat) || '';
+        const connector = index === 0
+          ? `Es begann mit <em>${story.title}</em>.`
+          : index === allStories.length - 1
+            ? `Nun ruht auch <em>${story.title}</em> in den Seiten dieser Rolle.`
+            : `Doch die Geschichte blieb nicht dort stehen, denn auf <em>${story.title}</em> folgte das nächste Echo.`;
+        paragraphs.push(`${connector} ${beat}${extra ? ' ' + extra : ''}`);
+      });
+
+      paragraphs.push('So wächst aus jedem überstandenen Kapitel kein bloßes Register, sondern ein fortlaufendes Buch aus Narben, Eiden, Ruinen und jenem trotzigen Schritt nach vorn, den nur die Excellants wirklich beherrschen.');
+
+      chronicleBookBody.innerHTML = paragraphs
+        .map((paragraph) => `<p>${formatTextBlock(paragraph)}</p>`)
+        .join('');
+    }
+
+    function renderCompletedAdventures() {
+      if (!completedAdventureFeed) return;
+      const entries = loadCompletedAdventures();
+      if (!entries.length) {
+        completedAdventureFeed.innerHTML = '<div class="archive-empty">Noch keine abgeschlossenen Abenteuer archiviert. Sobald du im zweiten Reiter ein Kapitel archiviert hast, taucht es hier auf.</div>';
+        return;
+      }
+
+      completedAdventureFeed.innerHTML = entries.map((entry) => {
+        const title = entry.title?.trim() || 'Unbenanntes Kapitel';
+        const teaser = entry.teaser?.trim() || buildAdventureTeaser(entry.title, entry.goals, entry.notes);
+        const goals = entry.goals?.trim();
+        const notes = entry.notes?.trim();
+        const archivedAt = entry.archivedAtLabel || 'Unbekannt';
+        return `
+          <article class="chronicle-entry">
+            <h3>${escapeHtml(title)}</h3>
+            <div class="archive-meta">
+              <span class="archive-pill">Archiviert ${escapeHtml(archivedAt)}</span>
+              <span class="archive-pill">Aus dem Reiter „Aktuelles Abenteuer“</span>
+            </div>
+            <p class="archive-teaser">${escapeHtml(teaser)}</p>
+            ${goals ? `<div class="archive-block"><h4>Ziele & Questen</h4><p>${formatTextBlock(goals)}</p></div>` : ''}
+            ${notes ? `<div class="archive-block"><h4>Chronistenfeld</h4><p>${formatTextBlock(notes)}</p></div>` : ''}
+            <p class="entry-footer">— Überliefert von den Excellants</p>
+          </article>
+        `;
+      }).join('');
+    }
+
+    textIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const saved = localStorage.getItem('dnd_' + id);
+      if (saved !== null) el.value = saved;
+      el.addEventListener('input', () => saveField(id));
+    });
+
+    if (saveCurrentAdventureBtn) {
+      saveCurrentAdventureBtn.addEventListener('click', () => {
+        ['currentTitle', 'currentGoals', 'currentNotes'].forEach(saveField);
+        saveCurrentAdventureBtn.textContent = 'Gespeichert';
+        window.setTimeout(() => {
+          saveCurrentAdventureBtn.textContent = 'Zwischenspeichern';
+        }, 1400);
+      });
+    }
+
+    if (archiveCurrentAdventureBtn) {
+      archiveCurrentAdventureBtn.addEventListener('click', () => {
+        const titleEl = document.getElementById('currentTitle');
+        const goalsEl = document.getElementById('currentGoals');
+        const notesEl = document.getElementById('currentNotes');
+        const title = titleEl?.value.trim() || '';
+        const goals = goalsEl?.value.trim() || '';
+        const notes = notesEl?.value.trim() || '';
+
+        if (!title && !goals && !notes) {
+          alert('Trag zuerst mindestens einen Kapitelnamen oder Notizen ein, bevor du das Abenteuer archivierst.');
+          return;
+        }
+
+        ['currentTitle', 'currentGoals', 'currentNotes'].forEach(saveField);
+
+        const now = new Date();
+        const archivedAtLabel = now.toLocaleDateString('de-DE', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+        const teaser = buildAdventureTeaser(title, goals, notes);
+
+        const entries = loadCompletedAdventures();
+        entries.unshift({
+          title,
+          teaser,
+          goals,
+          notes,
+          archivedAt: now.toISOString(),
+          archivedAtLabel
+        });
+        saveCompletedAdventures(entries);
+        renderCompletedAdventures();
+        renderChronicleBook();
+
+        if (titleEl) titleEl.value = '';
+        if (goalsEl) goalsEl.value = '';
+        if (notesEl) notesEl.value = '';
+        ['currentTitle', 'currentGoals', 'currentNotes'].forEach(saveField);
+
+        archiveCurrentAdventureBtn.textContent = 'Archiviert';
+        window.setTimeout(() => {
+          archiveCurrentAdventureBtn.textContent = 'Als bestandenes Abenteuer archivieren';
+        }, 1600);
+      });
+    }
+
+    renderCompletedAdventures();
+    renderChronicleBook();
+
+    // Klangkammer track list
+    const allTracks = [
+      { label: 'Thalindra Sturmklinge — Intro', path: 'assets/Thalindra/Thalindra Intro.mp3' },
+      { label: 'Thalindra Sturmklinge — Lea Engel Monster', path: 'assets/Thalindra/lea-engel-monster.mp3' },
+      { label: 'Thalindra Sturmklinge — Sturmklinge', path: 'assets/Thalindra/thalindra-sturmklinge.mp3' },
+      { label: 'Lilith Dorn — Intro', path: 'assets/Lilith/Lilith Intro.mp3' },
+      { label: 'Virex Schattenlächeln — Intro', path: 'assets/Virex/Virex Intro.mp3' },
+      { label: 'Fizzle Geargrin — Intro', path: 'assets/Fizzle/Fizzle Intro.mp3' },
+      { label: 'Vex Eisenfurche — Intro', path: 'assets/Vex/Vex Intro.mp3' },
+      { label: 'DM (Omniscientia) — Intro', path: 'assets/DM/omni.mp3' },
+      { label: 'Das Haus der Dursts', path: 'assets/Das Haus der Dursts.mp3' },
+      { label: 'Das Haus der Dursts 2', path: 'assets/Das Haus der Dursts 2.mp3' },
+    ];
+
+    const trackListEl = document.getElementById('trackList');
+    let activeTrackLi = null;
+
+    allTracks.forEach((track, idx) => {
+      const li = document.createElement('li');
+      li.style.cssText = 'padding:0.6rem 1rem;margin:0.3rem 0;border-radius:8px;cursor:pointer;border:1px solid var(--border);transition:background 0.2s,border-color 0.2s;color:var(--text);';
+      li.textContent = track.label;
+      li.addEventListener('mouseenter', () => { li.style.background = 'rgba(212,167,62,0.08)'; li.style.borderColor = 'var(--gold-dim)'; });
+      li.addEventListener('mouseleave', () => { if (activeTrackLi !== li) { li.style.background = 'transparent'; li.style.borderColor = 'var(--border)'; } });
+      li.addEventListener('click', () => {
+        if (activeTrackLi) { activeTrackLi.style.background = 'transparent'; activeTrackLi.style.borderColor = 'var(--border)'; }
+        activeTrackLi = li;
+        li.style.background = 'rgba(212,167,62,0.15)';
+        li.style.borderColor = 'var(--gold)';
+        audioPlayer.pause();
+        audioPlayer.src = track.path;
+        audioPlayer.play().catch(() => {});
+        currentTrack = track.label;
+      });
+      trackListEl.appendChild(li);
+    });
+  </script>
+</body>
+</html>

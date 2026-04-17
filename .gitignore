@@ -1,0 +1,15 @@
+# Local backups / temp files
+*.bak
+*.bak.*
+*~
+
+# Python / local tooling
+__pycache__/
+*.pyc
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Local test artifacts
+server.log
