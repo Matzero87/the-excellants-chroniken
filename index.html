@@ -393,6 +393,67 @@
       padding: 1rem;
       border-radius: 8px;
     }
+    .audio-subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 0 auto 1.75rem;
+    }
+    .audio-subtab-button {
+      border: 1px solid rgba(197, 160, 89, 0.28);
+      background: rgba(26, 25, 28, 0.88);
+      color: var(--gold-dim);
+      border-radius: 999px;
+      padding: 0.55rem 1.1rem;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.03em;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .audio-subtab-button:hover,
+    .audio-subtab-button.active {
+      background: rgba(197, 160, 89, 0.16);
+      color: var(--gold);
+      border-color: rgba(197, 160, 89, 0.6);
+      transform: translateY(-1px);
+    }
+    .audio-subtab-panel {
+      display: none;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: left;
+      background: rgba(18, 15, 12, 0.92);
+      border: 1px solid rgba(197, 160, 89, 0.18);
+      border-radius: 14px;
+      padding: 1.35rem;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+    }
+    .audio-subtab-panel.active {
+      display: block;
+    }
+    .audio-subtab-panel h4 {
+      margin-top: 0;
+      margin-bottom: 0.65rem;
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+    }
+    .audio-subtab-panel p {
+      margin-top: 0;
+      color: #d8cfbe;
+    }
+    .audio-track-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .audio-empty {
+      margin: 0;
+      padding: 0.4rem 0;
+      color: #b9ad93;
+      font-style: italic;
+      text-align: center;
+    }
     audio {
       width: 100%;
       display: block;
@@ -1691,10 +1752,39 @@ Knüpfte sie neu.</p>
       </div>
     </div>
     <div class="audio-section">
-      <h3>Verfügbare Tracks</h3>
-      <ul id="trackList" style="list-style:none;padding:0;"></ul>
+      <div class="audio-subtabs">
+        <button class="audio-subtab-button active" data-audio-tab="characters" type="button">Charaktere</button>
+        <button class="audio-subtab-button" data-audio-tab="vex" type="button">Vex's Lieder</button>
+        <button class="audio-subtab-button" data-audio-tab="book" type="button">Buch zu den Excellants</button>
+        <button class="audio-subtab-button" data-audio-tab="adventures" type="button">Abenteuer</button>
+      </div>
+
+      <div class="audio-subtab-panel active" id="audio-subtab-characters">
+        <h4>Charaktere</h4>
+        <p>Die Themen und Intros der Gefährten — Stimmen, die wie Narben, Versprechen und Spott durch die Chronik hallen.</p>
+        <ul id="trackListCharacters" class="audio-track-list"></ul>
+      </div>
+
+      <div class="audio-subtab-panel" id="audio-subtab-vex">
+        <h4>Vex's Lieder</h4>
+        <p>Eine eigene kleine Sammlung für alles, was nach Vex klingt: rau, standhaft und eher für Schlachthallen als für höfische Säle gedacht.</p>
+        <ul id="trackListVex" class="audio-track-list"></ul>
+      </div>
+
+      <div class="audio-subtab-panel" id="audio-subtab-book">
+        <h4>Buch zu den Excellants</h4>
+        <p>Hier sammelt sich das Material, das eher wie gesprochenes Chronikgut, Lesungen oder begleitende Notizen wirkt.</p>
+        <div class="session-notes" style="margin-top:1rem;">
+          <textarea id="audioNotes" placeholder="Notizen zum Buch der Excellants, Ideen für spätere Vertonungen oder Lesungen..." style="margin-top:0;"></textarea>
+        </div>
+      </div>
+
+      <div class="audio-subtab-panel" id="audio-subtab-adventures">
+        <h4>Abenteuer</h4>
+        <p>Vertonungen, die direkt an einzelne Kapitel und überstandene Reisen gebunden sind.</p>
+        <ul id="trackListAdventures" class="audio-track-list"></ul>
+      </div>
     </div>
-    <textarea id="audioNotes" placeholder="Audio-Notizen hier...", style="margin-top:1.5rem;"></textarea>
   </div>
 
   <div class="footer">
@@ -2015,37 +2105,81 @@ Knüpfte sie neu.</p>
 
     // Klangkammer track list
     const allTracks = [
-      { label: 'Thalindra Sturmklinge — Intro', path: 'assets/Thalindra/Thalindra Intro.mp3' },
-      { label: 'Thalindra Sturmklinge — Sturmklinge', path: 'assets/Thalindra/thalindra-sturmklinge.mp3' },
-      { label: 'Lilith Dorn — Intro', path: 'assets/Lilith/Lilith Intro.mp3' },
-      { label: 'Virex Schattenlächeln — Intro', path: 'assets/Virex/Virex Intro.mp3' },
-      { label: 'Fizzle Geargrin — Intro', path: 'assets/Fizzle/Fizzle Intro.mp3' },
-      { label: 'Vex Eisenfurche — Intro', path: 'assets/Vex/Vex Intro.mp3' },
-      { label: 'DM (Omniscientia) — Intro', path: 'assets/DM/omni.mp3' },
-      { label: 'Das Haus der Dursts', path: 'assets/Das Haus der Dursts.mp3' },
-      { label: 'Das Haus der Dursts 2', path: 'assets/Das Haus der Dursts 2.mp3' },
+      { label: 'Thalindra Sturmklinge — Intro', path: 'assets/Thalindra/Thalindra Intro.mp3', category: 'characters' },
+      { label: 'Lilith Dorn — Intro', path: 'assets/Lilith/Lilith Intro.mp3', category: 'characters' },
+      { label: 'Virex Schattenlächeln — Intro', path: 'assets/Virex/Virex Intro.mp3', category: 'characters' },
+      { label: 'Fizzle Geargrin — Intro', path: 'assets/Fizzle/Fizzle Intro.mp3', category: 'characters' },
+      { label: 'DM (Omniscientia) — Intro', path: 'assets/DM/omni.mp3', category: 'characters' },
+      { label: 'Vex Eisenfurche — Intro', path: 'assets/Vex/Vex Intro.mp3', category: 'vex' },
+      { label: 'Das Haus der Dursts', path: 'assets/Das Haus der Dursts.mp3', category: 'adventures' },
+      { label: 'Das Haus der Dursts 2', path: 'assets/Das Haus der Dursts 2.mp3', category: 'adventures' },
     ];
 
-    const trackListEl = document.getElementById('trackList');
+    const audioSubtabButtons = document.querySelectorAll('.audio-subtab-button');
+    const audioSubtabPanels = document.querySelectorAll('.audio-subtab-panel');
+    const audioTrackLists = {
+      characters: document.getElementById('trackListCharacters'),
+      vex: document.getElementById('trackListVex'),
+      adventures: document.getElementById('trackListAdventures')
+    };
     let activeTrackLi = null;
 
-    allTracks.forEach((track, idx) => {
-      const li = document.createElement('li');
-      li.style.cssText = 'padding:0.6rem 1rem;margin:0.3rem 0;border-radius:8px;cursor:pointer;border:1px solid var(--border);transition:background 0.2s,border-color 0.2s;color:var(--text);';
-      li.textContent = track.label;
-      li.addEventListener('mouseenter', () => { li.style.background = 'rgba(212,167,62,0.08)'; li.style.borderColor = 'var(--gold-dim)'; });
-      li.addEventListener('mouseleave', () => { if (activeTrackLi !== li) { li.style.background = 'transparent'; li.style.borderColor = 'var(--border)'; } });
-      li.addEventListener('click', () => {
-        if (activeTrackLi) { activeTrackLi.style.background = 'transparent'; activeTrackLi.style.borderColor = 'var(--border)'; }
-        activeTrackLi = li;
-        li.style.background = 'rgba(212,167,62,0.15)';
-        li.style.borderColor = 'var(--gold)';
-        audioPlayer.pause();
-        audioPlayer.src = track.path;
-        audioPlayer.play().catch(() => {});
-        currentTrack = track.label;
+    function renderTrackList(target, tracks) {
+      const listEl = audioTrackLists[target];
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      if (!tracks.length) {
+        listEl.innerHTML = '<li class="audio-empty">Noch kein Eintrag in diesem Unterreiter.</li>';
+        return;
+      }
+
+      tracks.forEach((track) => {
+        const li = document.createElement('li');
+        li.style.cssText = 'padding:0.6rem 1rem;margin:0.3rem 0;border-radius:8px;cursor:pointer;border:1px solid var(--border);transition:background 0.2s,border-color 0.2s;color:var(--text);';
+        li.textContent = track.label;
+        li.addEventListener('mouseenter', () => {
+          if (activeTrackLi !== li) {
+            li.style.background = 'rgba(212,167,62,0.08)';
+            li.style.borderColor = 'var(--gold-dim)';
+          }
+        });
+        li.addEventListener('mouseleave', () => {
+          if (activeTrackLi !== li) {
+            li.style.background = 'transparent';
+            li.style.borderColor = 'var(--border)';
+          }
+        });
+        li.addEventListener('click', () => {
+          if (activeTrackLi) {
+            activeTrackLi.style.background = 'transparent';
+            activeTrackLi.style.borderColor = 'var(--border)';
+          }
+          activeTrackLi = li;
+          li.style.background = 'rgba(212,167,62,0.15)';
+          li.style.borderColor = 'var(--gold)';
+          audioPlayer.pause();
+          audioPlayer.src = track.path;
+          audioPlayer.play().catch(() => {});
+          currentTrack = track.label;
+        });
+        listEl.appendChild(li);
       });
-      trackListEl.appendChild(li);
+    }
+
+    renderTrackList('characters', allTracks.filter((track) => track.category === 'characters'));
+    renderTrackList('vex', allTracks.filter((track) => track.category === 'vex'));
+    renderTrackList('adventures', allTracks.filter((track) => track.category === 'adventures'));
+
+    audioSubtabButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.audioTab;
+        audioSubtabButtons.forEach((btn) => btn.classList.remove('active'));
+        audioSubtabPanels.forEach((panel) => panel.classList.remove('active'));
+        button.classList.add('active');
+        const panel = document.getElementById(`audio-subtab-${target}`);
+        if (panel) panel.classList.add('active');
+      });
     });
   </script>
 </body>
