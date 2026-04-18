@@ -6,6 +6,14 @@
 # Python / local tooling
 __pycache__/
 *.pyc
+*.py
+!assets/Fizzle/generate_fizzle_cards.py
+
+# Generated card images (not needed on site)
+card_*.png
+
+# Sound source WAV files (only mp3/ogg are served)
+*.wav
 
 # OS / editor noise
 .DS_Store
@@ -13,3 +21,11 @@ Thumbs.db
 
 # Local test artifacts
 server.log
+
+# Stray markdown / audio outside assets
+/Virex*.ogg
+/Virex*.md
+
+# Analysis scripts
+analyze_space.py
+check_cards.py

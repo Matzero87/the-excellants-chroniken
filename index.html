@@ -967,6 +967,383 @@
         height: 200px;
       }
     }
+
+    /* ====== FIZZLE'S WERKSTATT — Gadget Cards ====== */
+
+    .gadgets-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .gadgets-header h2 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 2rem;
+      margin: 0 0 0.3rem;
+      letter-spacing: 0.06em;
+    }
+    .gadgets-subtitle {
+      color: #cdbb96;
+      font-style: italic;
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    /* Chaoswurf Banner */
+    .chaos-roll-banner {
+      background: linear-gradient(135deg, rgba(158,42,43,0.18), rgba(197,160,89,0.08));
+      border: 1.5px solid var(--gold-dim);
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .chaos-roll-title {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1.15rem;
+      margin: 0 0 0.5rem;
+      text-align: center;
+    }
+    .chaos-roll-desc {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin: 0 0 0.8rem;
+    }
+    .chaos-roll-table {
+      display: grid;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .chaos-row {
+      display: grid;
+      grid-template-columns: 60px 100px 1fr;
+      align-items: center;
+      padding: 0.35rem 0.7rem;
+      border-radius: 5px;
+      font-size: 0.92rem;
+    }
+    .chaos-fail    { background: rgba(180,50,50,0.15); border-left: 3px solid #b43232; }
+    .chaos-unstable{ background: rgba(200,160,60,0.12); border-left: 3px solid #b8942e; }
+    .chaos-success { background: rgba(70,150,70,0.12); border-left: 3px solid #3a8a3a; }
+    .chaos-crit    { background: rgba(197,160,89,0.18); border-left: 3px solid var(--gold); }
+    .chaos-die {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .chaos-label {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+    }
+    .chaos-desc {
+      color: #bbb8b0;
+    }
+
+    /* Gadget Cards Grid */
+    .gadget-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+      padding: 0 0.5rem;
+    }
+
+    /* Individual Gadget Card */
+    .gadget-card {
+      position: relative;
+      min-height: 430px;
+      cursor: pointer;
+      outline: none;
+    }
+    .gadget-card:hover .gadget-card-face {
+      border-color: rgba(197,160,89,0.55);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45), 0 0 12px rgba(197,160,89,0.08);
+    }
+    .gadget-card:focus-visible .gadget-card-face {
+      border-color: rgba(197,160,89,0.75);
+      box-shadow: 0 0 0 2px rgba(197,160,89,0.25), 0 8px 24px rgba(0,0,0,0.45);
+    }
+    .gadget-card-inner {
+      position: relative;
+      min-height: 430px;
+      width: 100%;
+    }
+    .gadget-card-face {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(165deg, #1e1c1f 0%, #161418 100%);
+      border: 1.5px solid rgba(197,160,89,0.3);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.28s ease, visibility 0.28s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+    }
+    .gadget-card-face::before,
+    .gadget-card-face::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      border-radius: 10px;
+    }
+    .gadget-card-face::before {
+      inset: 6px;
+      border: 1px solid rgba(197,160,89,0.52);
+    }
+    .gadget-card-face::after {
+      inset: 11px;
+      border: 1px solid rgba(197,160,89,0.18);
+    }
+    .gadget-card-front {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+    .gadget-card-back {
+      background: linear-gradient(165deg, #151312 0%, #0f0e11 100%);
+      justify-content: space-between;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1;
+    }
+    .gadget-card.is-flipped .gadget-card-front {
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1;
+    }
+    .gadget-card.is-flipped .gadget-card-back {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    .gadget-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .gadget-type-gadget {
+      background: linear-gradient(90deg, rgba(197,160,89,0.2), rgba(197,160,89,0.03));
+    }
+    .gadget-type-potion {
+      background: linear-gradient(90deg, rgba(100,60,180,0.25), rgba(100,60,180,0.03));
+    }
+    .gadget-type-companion {
+      background: linear-gradient(90deg, rgba(60,160,180,0.25), rgba(60,160,180,0.03));
+    }
+    .gadget-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f0e11;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .gadget-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      color: var(--gold);
+      margin: 0;
+      flex: 1;
+    }
+    .gadget-action-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #8a8680;
+      background: rgba(255,255,255,0.06);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .gadget-card-body {
+      padding: 0.9rem 1rem;
+      flex: 1;
+    }
+    .gadget-card-front .gadget-card-body::after {
+      content: 'Klicken für Bild';
+      display: block;
+      margin-top: 0.85rem;
+      padding-top: 0.7rem;
+      border-top: 1px solid rgba(197,160,89,0.12);
+      text-align: center;
+      color: var(--gold-dim);
+      font-size: 0.8rem;
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+    .gadget-card-back-media {
+      padding: 1rem 1rem 0.4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .gadget-card-back-media img {
+      width: 100%;
+      max-width: 250px;
+      height: 260px;
+      object-fit: contain;
+      display: block;
+      background: #0a090b;
+      border: 1px solid rgba(197,160,89,0.18);
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .gadget-card-back-caption {
+      padding: 0.8rem 1rem 1rem;
+      text-align: center;
+      border-top: 1px solid rgba(197,160,89,0.12);
+      background: rgba(197,160,89,0.04);
+    }
+    .gadget-back-title {
+      display: block;
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+    }
+    .gadget-back-tagline {
+      color: #cdbb96;
+      font-style: italic;
+      font-size: 0.95rem;
+      margin-bottom: 0.45rem;
+    }
+    .gadget-card-hint {
+      color: var(--gold-dim);
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+    .gadget-desc {
+      font-size: 0.93rem;
+      color: #c8c5be;
+      margin: 0 0 0.6rem;
+      line-height: 1.5;
+    }
+    .gadget-detail {
+      font-size: 0.88rem;
+      color: var(--text);
+      margin: 0.3rem 0;
+      line-height: 1.5;
+    }
+    .gadget-detail-label {
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .gadget-chaos {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .chaos-tag {
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    .chaos-tag.chaos-fail    { color: #d95050; }
+    .chaos-tag.chaos-unstable{ color: #ccaa44; }
+    .chaos-tag.chaos-crit    { color: var(--gold); }
+
+    .gadget-flavor {
+      font-style: italic;
+      font-size: 0.82rem;
+      color: #8a7a60;
+      padding: 0.65rem 1rem;
+      border-top: 1px solid var(--card-border);
+      background: rgba(197,160,89,0.03);
+      text-align: center;
+    }
+
+    /* Phiole Table */
+    .gadget-phiole-table {
+      display: grid;
+      gap: 0.2rem;
+      margin: 0.5rem 0;
+    }
+    .phiole-row {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      font-size: 0.87rem;
+      color: var(--text);
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.03);
+    }
+    .phiole-die {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: #f0e8d8;
+      background: rgba(100,60,180,0.5);
+      border-radius: 4px;
+    }
+
+    /* AVA Card special */
+    .gadget-card-ava {
+      border-color: rgba(60,160,180,0.4);
+      background: linear-gradient(165deg, #1a1e1f 0%, #141618 100%);
+    }
+    .gadget-card-ava .gadget-number {
+      background: linear-gradient(135deg, #3ca0b4, #2d7a8a);
+      font-size: 0.7rem;
+      letter-spacing: 0.02em;
+    }
+    .ava-acronyms {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      margin-bottom: 0.6rem;
+    }
+    .ava-acro {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: #5cc8d8;
+      font-weight: 700;
+    }
+    .ava-acro span {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .ava-acro-alt {
+      font-size: 0.82rem;
+      color: #6a9aa5;
+      font-style: italic;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 720px) {
+      .gadget-grid {
+        grid-template-columns: 1fr;
+      }
+      .chaos-roll-banner {
+        padding: 0.8rem 1rem;
+      }
+      .chaos-row {
+        grid-template-columns: 45px 80px 1fr;
+        font-size: 0.82rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -991,6 +1368,7 @@
     <button class="tab-button" data-tab="current">Aktuelles Abenteuer</button>
     <button class="tab-button" data-tab="adventures">Bestandene Abenteuer</button>
     <button class="tab-button" data-tab="audio">Klangkammer</button>
+    <button class="tab-button" data-tab="gadgets">Fizzles Werkstatt</button>
 
   </div>
 
@@ -1787,6 +2165,298 @@ Knüpfte sie neu.</p>
     </div>
   </div>
 
+  <div id="gadgets" class="panel">
+    <div class="gadgets-header">
+      <h2>Fizzles Werkstatt</h2>
+      <p class="gadgets-subtitle">Erfindungen, die fast funktionieren. Meistens.</p>
+    </div>
+
+    <div class="chaos-roll-banner">
+      <h3 class="chaos-roll-title">&#9889; Der Chaoswurf</h3>
+      <p class="chaos-roll-desc">Immer wenn Fizzle ein Gadget benutzt, wirfle 1W20:</p>
+      <div class="chaos-roll-table">
+        <div class="chaos-row chaos-fail"><span class="chaos-die">1–4</span><span class="chaos-label">Fehlschlag</span><span class="chaos-desc">Geht schief / trifft falsches Ziel</span></div>
+        <div class="chaos-row chaos-unstable"><span class="chaos-die">5–9</span><span class="chaos-label">Instabil</span><span class="chaos-desc">Funktioniert, aber mit Nebenwirkung</span></div>
+        <div class="chaos-row chaos-success"><span class="chaos-die">10–17</span><span class="chaos-label">Erfolg</span><span class="chaos-desc">Funktioniert wie vorgesehen</span></div>
+        <div class="chaos-row chaos-crit"><span class="chaos-die">18–20</span><span class="chaos-label">Kritischer Erfolg</span><span class="chaos-desc">Übertrieben gut + Bonus-Effekt</span></div>
+      </div>
+    </div>
+
+    <div class="gadget-grid">
+
+      <!-- 1. Funkenherz Mk. II -->
+      <div class="gadget-card" data-type="gadget" data-sound="funkenherz" tabindex="0" role="button" aria-label="Funkenherz Mk. II umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">1</span>
+              <h3 class="gadget-name">Funkenherz Mk. II</h3>
+              <span class="gadget-action-label">Aktion</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Pulsierendes Gerät aus Kupfer und Glas. Glimmt und knistert unruhig.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Geworfen oder aktiviert: 1W6 Feuerschaden an ein Ziel oder kleinen Bereich.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> 2W6 Feuerschaden. Ziel steht kurz in Flammen oder wird erschreckt.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Überladen: 1W4 Schaden an Fizzle oder nur Rauch und dramatisches Zischen
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">1</span>
+              <h3 class="gadget-name">Funkenherz Mk. II</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/FunkenHerz MK.II.PNG" alt="Funkenherz Mk. II" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Fast stabil. Angeblich.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Greifklau 3000 -->
+      <div class="gadget-card" data-type="gadget" tabindex="0" role="button" aria-label="Greifklau 3000 umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">2</span>
+              <h3 class="gadget-name">Greifklau 3000</h3>
+              <span class="gadget-action-label">Aktion</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Mechanischer Greifarm mit Magnetkern und ausfahrbaren Fingern an einem Lederhandschuh.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Zieht kleine Gegenstände heran oder stört ein Ziel in Griffweite auf Distanz.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Gegner kurz festgehalten oder entwaffnet. Objekte aus der Distanz manipulieren.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Bleibt hängen, zieht dich falsch oder greift etwas völlig Falsches
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">2</span>
+              <h3 class="gadget-name">Greifklau 3000</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/Greifklau.PNG" alt="Greifklau 3000" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Präzisionswerkzeug. Wohl kaum.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Überdruck-Regulator -->
+      <div class="gadget-card" data-type="gadget" data-sound="ueberdruck-regulator" tabindex="0" role="button" aria-label="Überdruck-Regulator umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">3</span>
+              <h3 class="gadget-name">Überdruck-Regulator</h3>
+              <span class="gadget-action-label">Aktion</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Röhrenförmiges Gerät mit Ventilen und einem viel zu großen Hebel. Zischt bedrohlich.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Stoßwelle drängt Gegner zurück oder schafft Distanz.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Gegner stark zurückgestoßen oder gefallen. Du repositionierst dich sofort.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Druck entlädt sich falsch: du fliegst selbst oder ein lauter Knall verrät dich
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">3</span>
+              <h3 class="gadget-name">Überdruck-Regulator</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/Überdruck-Regulator.PNG" alt="Überdruck-Regulator" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Mobilität durch kontrollierte Explosionen.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Rauchkapsel -->
+      <div class="gadget-card" data-type="gadget" data-sound="rauchkapsel" tabindex="0" role="button" aria-label="Rauchkapsel umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">4</span>
+              <h3 class="gadget-name">Rauchkapsel</h3>
+              <span class="gadget-action-label">Bonusaktion/Aktion</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Kleine Glas- oder Metallkapseln mit übertriebenem Innendruck.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Auf einen Punkt geworfen: 3 m Radius stark verdeckt. Gegner haben Nachteil.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Zusätzlich Furcht oder Verwirrung für 1 Runde bei unvorbereiteten Feinden.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Fizzle steht selbst im Rauch oder der Knall zieht sofort Aufmerksamkeit an
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">4</span>
+              <h3 class="gadget-name">Rauchkapsel</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/Rauchkapsel.PNG" alt="Rauchkapsel" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Mehr Lärm als Nutzen. Oft beides.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Federfalle -->
+      <div class="gadget-card" data-type="gadget" data-sound="federfalle" tabindex="0" role="button" aria-label="Federfalle umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">5</span>
+              <h3 class="gadget-name">Federfalle</h3>
+              <span class="gadget-action-label">Aktion (vorbereitet)</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Zusammenklappbares Gerät aus Federn, Zahnrädern und fragwürdigen Entscheidungen.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Bei Auslösung: DEX-Save. Bei Fehlschlag festgesetzt und 1W6 Schaden.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Hält zwei Gegner fest oder länger als erwartet.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Löst sofort aus. Sehr oft auf Fizzle.
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">5</span>
+              <h3 class="gadget-name">Federfalle</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/Federfalle.PNG" alt="Federfalle" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Eine konzeptionelle Falle.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Magnetgerät -->
+      <div class="gadget-card" data-type="gadget" data-sound="magnetgeraet" tabindex="0" role="button" aria-label="Magnetgerät umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">6</span>
+              <h3 class="gadget-name">Magnetgerät</h3>
+              <span class="gadget-action-label">Aktion</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Überladener Magnet mit Kurbelmechanismus.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Metallträger: STR-Save. Bei Fehlschlag fällt die Waffe oder Bewegung halbiert sich.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Gegner komplett festgezogen oder entwaffnet.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Zieht Fizzle zum Gegner oder reißt sämtliches Metall im Umkreis los
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">6</span>
+              <h3 class="gadget-name">Magnetgerät</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/Magnetgerät.PNG" alt="Magnetgerät" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Zieht Metall an. Leider alles.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Mini-Flammenwerfer -->
+      <div class="gadget-card" data-type="gadget" data-sound="mini-flammenwerfer" tabindex="0" role="button" aria-label="Mini-Flammenwerfer umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">7</span>
+              <h3 class="gadget-name">Mini-Flammenwerfer</h3>
+              <span class="gadget-action-label">Aktion (Kegel)</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Eine Mischung aus Flammenwerfer und Küchenunfall.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> 5 m Kegel, 2W8 Feuerschaden, DEX-Save halbiert.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Ziel brennt weiter und nimmt 1W6 pro Runde.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Rückstoß: Fizzle brennt für 1W6 oder Boden bleibt gefährlich entflammt
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">7</span>
+              <h3 class="gadget-name">Mini-Flammenwerfer</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/Mini-Flammenwerfer.PNG" alt="Mini-Flammenwerfer" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Küchenunfall, aber bewaffnet.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Denkerhelm (Beta) -->
+      <div class="gadget-card" data-type="gadget" data-sound="denkerhelm" tabindex="0" role="button" aria-label="Denkerhelm (Beta) umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">8</span>
+              <h3 class="gadget-name">Denkerhelm (Beta)</h3>
+              <span class="gadget-action-label">Ausrüstung</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Helm mit drehenden Zahnrädern und blinkenden Lichtern.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Verbessert Konzentration oder liefert absurde Eingebungen; im Zweifel beides.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Wahrer Moment der Genialität: Bonus auf INT-basierte Idee oder Analyse.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Absurde Idee statt Konzentration
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-gadget">
+              <span class="gadget-number">8</span>
+              <h3 class="gadget-name">Denkerhelm (Beta)</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/Denkerhelm.PNG" alt="Denkerhelm (Beta)" /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Erhöht Konzentration. Oder Ideen.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. A.V.A. -->
+      <div class="gadget-card gadget-card-ava" data-type="companion" data-sound="ava" tabindex="0" role="button" aria-label="A.V.A. umdrehen">
+        <div class="gadget-card-inner">
+          <div class="gadget-card-face gadget-card-front">
+            <div class="gadget-card-header gadget-type-companion">
+              <span class="gadget-number">9</span>
+              <h3 class="gadget-name">A.V.A.</h3>
+              <span class="gadget-action-label">Reaktion/Support</span>
+            </div>
+            <div class="gadget-card-body">
+              <p class="gadget-desc">Autonome Verteidigungs-Assistentin. Oder Adaptive Vernichtungs-Aparatur.</p>
+              <div class="gadget-detail"><span class="gadget-detail-label">Effekt:</span> Stellt sich im Schutzmodus vor Fizzle, blockt Angriffe oder reagiert schneller.</div>
+              <div class="gadget-detail"><span class="gadget-detail-label">Voller Erfolg:</span> Schutzmodus verhindert Treffer oder verschafft Verbündeten Deckung/Vorteil.</div>
+              <div class="gadget-chaos">
+                <span class="chaos-tag chaos-fail">&#10007; Fehlschlag:</span> Reagiert eigensinnig, falsch priorisiert oder nur mit beleidigtem KRRRRT
+              </div>
+            </div>
+          </div>
+          <div class="gadget-card-face gadget-card-back">
+            <div class="gadget-card-header gadget-type-companion">
+              <span class="gadget-number">9</span>
+              <h3 class="gadget-name">A.V.A.</h3>
+              <span class="gadget-action-label">Bild</span>
+            </div>
+            <div class="gadget-card-back-media"><img src="assets/Fizzle/Fizzles Werkstatt/AvA.PNG" alt="A.V.A." /></div>
+            <div class="gadget-card-back-caption"><span class="gadget-back-title">Vielleicht loyal. Definitiv bewaffnet.</span><div class="gadget-card-hint">Klicken zum Zurückdrehen...</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <div class="footer">
     <p><em>Denn wenn Helden versagen,</em></p>
     <p><em>kommen die Excellants.</em></p>
@@ -1885,6 +2555,40 @@ Knüpfte sie neu.</p>
         document.addEventListener('keydown', function esc(e) {
           if (e.key === 'Escape') { closeOverlay(); document.removeEventListener('keydown', esc); }
         });
+      });
+    });
+
+    // Flippable gadget cards with sound effects
+    const gadgetCards = document.querySelectorAll('.gadget-card');
+    const gadgetSoundDir = 'assets/Fizzle/Fizzles Werkstatt/';
+    const gadgetSoundCache = {};
+    gadgetCards.forEach((card) => {
+      const toggleFlip = () => {
+        card.classList.toggle('is-flipped');
+      };
+
+      const playGadgetSound = () => {
+        const soundId = card.dataset.sound;
+        if (!soundId) return;
+        const oggPath = gadgetSoundDir + 'ogg/' + soundId + '.ogg';
+        if (!gadgetSoundCache[soundId]) {
+          gadgetSoundCache[soundId] = new Audio(oggPath);
+        }
+        const audio = gadgetSoundCache[soundId];
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      };
+
+      card.addEventListener('click', () => {
+        playGadgetSound();
+        toggleFlip();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          playGadgetSound();
+          toggleFlip();
+        }
       });
     });
 
